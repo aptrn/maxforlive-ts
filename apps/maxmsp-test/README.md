@@ -8,3 +8,7 @@ Differences from the template:
 
 - The `package.json` file is configured to use the `"@my-username/my-library` dependency from the workspace.
 - The `maxmsp.config.json` file is configured to use the `"@my-username/my-library` dependency.
+
+## To-do
+
+    - [ ] Add Maxforlive device to test in Ableton Live

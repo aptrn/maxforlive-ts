@@ -2,7 +2,7 @@
 	"name" : "maxmsp-test",
 	"version" : 1,
 	"creationdate" : 3810572918,
-	"modificationdate" : 3811271094,
+	"modificationdate" : 3811332337,
 	"viewrect" : [ 25.0, 133.0, 870.0, 980.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -24,17 +24,7 @@
 				"local" : 1
 			}
 ,
-			"mkc_index.js" : 			{
-				"kind" : "javascript",
-				"local" : 1
-			}
-,
-			"myLibrary_index.js" : 			{
-				"kind" : "javascript",
-				"local" : 1
-			}
-,
-			"not251_index.js" : 			{
+			"ableton_index.js" : 			{
 				"kind" : "javascript",
 				"local" : 1
 			}

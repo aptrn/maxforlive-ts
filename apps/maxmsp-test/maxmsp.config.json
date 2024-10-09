@@ -1,8 +1,13 @@
 {
   "output_path": "lib",
   "dependencies": {
-    "@my-username/my-library": {
-      "alias": "myLibrary",
+    "@aptrn/ableton-ts": {
+      "alias": "ableton",
+      "files": ["index.js"],
+      "path": ""
+    },
+    "@aptrn/parameters-ts": {
+      "alias": "params",
       "files": ["index.js"],
       "path": ""
     }
