@@ -20,3 +20,4 @@ This is a [turborepo monorepo](https://turbo.build/repo/docs) template with the 
 
 - `ableton-ts`: Library to interact with Ableton Live Object Model
 - `parameters-ts`: Library to manage MaxMsp UI
+- `maxmsp-test`: Instance of [this template](https://github.com/aptrn/maxmsp-ts-example) to test libraries.
