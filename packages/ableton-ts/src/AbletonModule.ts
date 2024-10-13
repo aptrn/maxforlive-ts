@@ -52,7 +52,10 @@ class AbletonLive {
    * @param context - ClipContext provided in Midi Tools Generator and Transformator
    */
   constructor(context?: ClipContext) {
-    this.Live = new LiveAPI();
+    function test(): void {
+      console.log("test");
+    }
+    this.Live = new LiveAPI(test, "test");
     if (context) {
       this.context = context;
       this.clipLength = this.getClipLength();
