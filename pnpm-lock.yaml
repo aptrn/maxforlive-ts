@@ -41,10 +41,6 @@ importers:
 
   packages/ableton-ts:
     dependencies:
-      '@types/maxmsp':
-        specifier: ^1.0.12
-        version: 1.0.12
-    devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^28.0.0
         version: 28.0.0(rollup@4.24.0)
@@ -60,6 +56,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.13
         version: 29.5.13
+      '@types/maxmsp':
+        specifier: ^1.0.12
+        version: 1.0.12
       '@types/node':
         specifier: ^22.7.4
         version: 22.7.5
