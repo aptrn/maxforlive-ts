@@ -2,12 +2,12 @@
   "name": "monorepo",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
+    "build": "turbo run build",
+    "dev": "turbo run dev  --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "maxmsp": "turbo maxmsp",
+    "maxmsp": "turbo run maxmsp",
     "release": "changeset publish"
   },
   "devDependencies": {

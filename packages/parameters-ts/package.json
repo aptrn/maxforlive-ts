@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "tsc",
     "test": "jest",
+    "dev": "rollup -w -c rollup.config.js",
     "build": "rollup -c rollup.config.js",
     "docs": "pnpx typedoc",
     "type-check": "tsc --noEmit"

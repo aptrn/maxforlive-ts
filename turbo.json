@@ -8,12 +8,12 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "dependsOn": ["^dev"]
     },
     "test": {
       "dependsOn": ["^build"],
       "cache": false,
-      "persistent": true
+      "persistent": false
     },
     "maxmsp": {
       "cache": false,

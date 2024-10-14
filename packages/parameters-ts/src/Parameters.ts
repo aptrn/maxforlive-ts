@@ -2,27 +2,52 @@ export { ParametersUI };
 
 class ParametersUI<ParamsType> {
   params: ParamsType;
-  paramsD: Dict;
-  paramsObj: Maxobj;
-  recallD: Dict;
-  recallObj: Maxobj;
-  updateObj: Maxobj;
   gui: Patcher;
   id: string;
   iter: number = 0;
+  paramsD: Dict | undefined;
+  paramsObj: Maxobj | undefined;
+  recallD: Dict | undefined;
+  recallObj: Maxobj | undefined;
+  updateObj: Maxobj | undefined;
+
   constructor(patcherID: string, params: ParamsType) {
     this.params = params;
     this.id = patcherID;
     this.gui = patcher.getnamed(this.id).subpatcher();
+    if (this.gui == undefined) {
+      throw new Error(
+        "Subpatcher with ID = " + this.id + "  not found, aborting!"
+      );
+    }
+    this.createInfrastructure();
+    this.createParameters();
+  }
 
-    //THIS DOESNT WORK FOR SOME REASON
+  //THIS DOESNT WORK FOR SOME REASON
 
-    //this.objList = [];
-    //this.gui.apply(this.cleanParameters); //for every object in the patcher apply function createParameters
-    //for (let i = 0; i < this.objList.length; i++) {
-    //  post(this.objList[i]);
-    //  this.gui.remove(this.objList[i]);
-    //}
+  //this.objList = [];
+  //this.gui.apply(this.cleanParameters); //for every object in the patcher apply function createParameters
+  //for (let i = 0; i < this.objList.length; i++) {
+  //  post(this.objList[i]);
+  //  this.gui.remove(this.objList[i]);
+  //}
+
+  /**
+   * This function checks if the infrastructure exists ("id" Dict, "id_recall" Dict and "---update" Send objects).
+   * @returns {boolean} True if infrastructure exists, false otherwise
+   */
+  infrastructureExists(): boolean {
+    //TBI
+    return false;
+  }
+
+  /**
+   * This function creates a "Dict" object named "id", a "Dict" object named "id_recall" and a Send object with target "---update"
+   * @returns {void}
+   */
+  createInfrastructure(): void {
+    this.cleanInfrastructure();
 
     let idObj: Maxobj = this.gui.getnamed("id");
     idObj.message("set", this.id);
@@ -35,6 +60,40 @@ class ParametersUI<ParamsType> {
     this.paramsD = new Dict(this.id); //used to get parameters values
     this.updateObj = this.gui.newdefault(50, 700, "s", "---update"); //create a dict object instance called "thid.id_update"
     this.updateObj.varname = "update";
+  }
+
+  /**
+   * This function should clear "id" Dict, "id_recall" Dict and "---update" Send objects.
+   * @returns {void}
+   */
+  cleanInfrastructure(): void {
+    if (this.infrastructureExists() == true) {
+    }
+    //TBI
+    return;
+  }
+
+  /**
+   * This function checks if parameters exist in the Patcher ("pvar", "dict.unpacks" and "prepend" objects).
+   * @returns Return true if parameters exist, false otherwise
+   */
+  parametersExist(): boolean {
+    //TBI
+    return false;
+  }
+
+  /**
+   * This function creates, for each property in this.params object, a "pvar" object named as the proeperty and relative parameter infrastructure as "prepend"s and "dict.unpack"s to receive from "id_recall" Dict and send to "id" Dict.
+   * Automatically recalls and then gets parameters values using recallParams() and getParams() functions.
+   * @param newParams Optional new parameter values
+   * @returns {void}
+   */
+  createParameters(newParams?: ParamsType): void {
+    this.cleanParameters();
+
+    if (newParams != undefined) {
+      this.params = newParams;
+    }
 
     this.iter = 0;
 
@@ -81,28 +140,55 @@ class ParametersUI<ParamsType> {
       this.iter++;
     }
 
-    this.setParams(this.params);
+    this.recallParams(this.params);
     this.getParams();
   }
 
-  cleanParameters(obj: Maxobj): void {
-    if (obj.varname != "" && obj.varname != undefined) {
-      //post(obj.varname);
+  /**
+   * This function should clear all "pvar" objects and relative parameter infrastructure.
+   * @returns {void}
+   */
+  cleanParameters(): void {
+    if (this.parametersExist() == true) {
+    }
+    //TBI
+    //if (obj.varname != "" && obj.varname != undefined) {
+    //post(obj.varname);
+    //} else {
+    //post(obj.maxclass);
+    //this.objList.push(obj);
+    //}
+  }
+
+  /**
+   * This function gets parameter values from the "id" Dict, sets this.params and returns it
+   * @returns {ParamsType}
+   */
+  getParams(): ParamsType {
+    if (this.paramsD != undefined) {
+      this.params = JSON.parse(this.paramsD.stringify());
+      return this.params;
     } else {
-      //post(obj.maxclass);
-      //this.objList.push(obj);
+      throw new Error(
+        this.id +
+          " Dict cannot be found, you need to create infrastructure first"
+      );
     }
   }
 
-  getParams(): ParamsType {
-    this.params = JSON.parse(new Dict(this.id).stringify());
-    return this.params;
-  }
-
-  setParams(newParams: ParamsType) {
-    this.params = newParams;
-    this.recallD.clear();
-    this.recallD.parse(JSON.stringify(this.params));
-    this.recallObj.message("bang");
+  /**
+   * This function sets parameter values to the "id_recall" Dict, sets this.params and then clears the "id_recall" Dict.
+   * @param newParams New parameter values
+   * @returns {void}
+   */
+  recallParams(newParams: ParamsType): void {
+    if (this.recallD != undefined && this.recallObj != undefined) {
+      this.params = newParams;
+      this.recallD.clear();
+      this.recallD.parse(JSON.stringify(this.params));
+      this.recallObj.message("bang");
+    } else {
+      throw new Error("You need to create infrastructure first");
+    }
   }
 }

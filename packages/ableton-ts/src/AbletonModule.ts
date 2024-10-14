@@ -55,6 +55,7 @@ class AbletonLive {
     function test(): void {
       console.log("test");
     }
+
     this.Live = new LiveAPI(test, "test");
     if (context) {
       this.context = context;
