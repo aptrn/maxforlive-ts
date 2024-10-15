@@ -2,7 +2,7 @@
 	"name" : "maxmsp-test",
 	"version" : 1,
 	"creationdate" : 3810572918,
-	"modificationdate" : 3811769558,
+	"modificationdate" : 3811844350,
 	"viewrect" : [ -2248.0, 274.0, 870.0, 998.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -17,6 +17,11 @@
 			}
 ,
 			"UI.maxpat" : 			{
+				"kind" : "patcher",
+				"local" : 1
+			}
+,
+			"UI_alreadyCreated.maxpat" : 			{
 				"kind" : "patcher",
 				"local" : 1
 			}

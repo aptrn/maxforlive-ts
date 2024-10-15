@@ -40,6 +40,27 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-15",
+					"lockeddragscroll" : 0,
+					"lockedsize" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "UI_alreadyCreated.maxpat",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 544.0, 176.0, 400.0, 136.0 ],
+					"varname" : "test_2",
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-11",
 					"maxclass" : "comment",
 					"numinlets" : 1,
@@ -246,6 +267,11 @@
 			}
  ],
 		"parameters" : 		{
+			"obj-15::obj-3" : [ "dial[2]", "dial", 0 ],
+			"obj-15::obj-4" : [ "slider[2]", "slider", 0 ],
+			"obj-15::obj-5" : [ "numbox[2]", "numbox", 0 ],
+			"obj-15::obj-6" : [ "button[2]", "button", 0 ],
+			"obj-15::obj-7" : [ "menu[2]", "menu", 0 ],
 			"obj-7::obj-3" : [ "dial", "dial", 0 ],
 			"obj-7::obj-4" : [ "slider", "slider", 0 ],
 			"obj-7::obj-5" : [ "numbox", "numbox", 0 ],
@@ -256,6 +282,49 @@
 					"index" : 0,
 					"name" : "",
 					"parameters" : [ "-", "-", "-", "-", "-", "-", "-", "-" ]
+				}
+
+			}
+,
+			"parameter_overrides" : 			{
+				"obj-15::obj-3" : 				{
+					"parameter_longname" : "dial[2]"
+				}
+,
+				"obj-15::obj-4" : 				{
+					"parameter_longname" : "slider[2]"
+				}
+,
+				"obj-15::obj-5" : 				{
+					"parameter_longname" : "numbox[2]"
+				}
+,
+				"obj-15::obj-6" : 				{
+					"parameter_longname" : "button[2]"
+				}
+,
+				"obj-15::obj-7" : 				{
+					"parameter_longname" : "menu[2]"
+				}
+,
+				"obj-7::obj-3" : 				{
+					"parameter_longname" : "dial"
+				}
+,
+				"obj-7::obj-4" : 				{
+					"parameter_longname" : "slider"
+				}
+,
+				"obj-7::obj-5" : 				{
+					"parameter_longname" : "numbox"
+				}
+,
+				"obj-7::obj-6" : 				{
+					"parameter_longname" : "button"
+				}
+,
+				"obj-7::obj-7" : 				{
+					"parameter_longname" : "menu"
 				}
 
 			}
@@ -272,6 +341,13 @@
 			}
 , 			{
 				"name" : "UI.maxpat",
+				"bootpath" : "~/Documents/Code/maxforlive-ts/apps/maxmsp-test/Patchers",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "UI_alreadyCreated.maxpat",
 				"bootpath" : "~/Documents/Code/maxforlive-ts/apps/maxmsp-test/Patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",

@@ -21,6 +21,7 @@ let defaultParams: MyParams = {
 };
 
 let parameters: ParametersUI<MyParams>;
+let parameters2: ParametersUI<MyParams>;
 
 function getParams() {
   let paramValues = parameters.getParams();
@@ -29,6 +30,7 @@ function getParams() {
 
 function createParams() {
   parameters = new ParametersUI<MyParams>("test", defaultParams);
+  parameters2 = new ParametersUI<MyParams>("test_2", defaultParams);
 }
 
 function randomizeParams() {
