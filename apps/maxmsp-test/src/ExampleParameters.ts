@@ -4,7 +4,7 @@ inlets = 1;
 outlets = 1;
 autowatch = 1;
 
-type MyParams = {
+type TestParameterType = {
   dial: number;
   slider: number;
   numbox: number;
@@ -12,7 +12,7 @@ type MyParams = {
   menu: number;
 };
 
-let defaultParams: MyParams = {
+const defaultParams: TestParameterType = {
   dial: 0,
   slider: 0,
   numbox: 0,
@@ -20,27 +20,38 @@ let defaultParams: MyParams = {
   menu: 0,
 };
 
-let parameters: ParametersUI<MyParams>;
-let parameters2: ParametersUI<MyParams>;
+let parameterUIs: ParametersUI<TestParameterType>[] = [];
+let patcherNames: string[] = ["test", "test2"];
 
-function getParams() {
-  let paramValues = parameters.getParams();
+function init() {
+  for (let patcherName in patcherNames) {
+    parameterUIs[patcherName] = new ParametersUI<TestParameterType>(
+      patcherNames[patcherName],
+      defaultParams
+    );
+  }
+}
+
+function get() {
+  let index: number = arguments[0];
+  let paramValues = parameterUIs[index].getParams();
   post("Params: " + JSON.stringify(paramValues) + "\n");
 }
 
-function createParams() {
-  parameters = new ParametersUI<MyParams>("test", defaultParams);
-  parameters2 = new ParametersUI<MyParams>("test_2", defaultParams);
+function reset() {
+  let index: number = arguments[0];
+  parameterUIs[index].recallParams(defaultParams);
 }
 
-function randomizeParams() {
-  let randomValues: MyParams = defaultParams;
+function randomize() {
+  let index: number = arguments[0];
+  let randomValues: TestParameterType = { ...defaultParams };
   randomValues.dial = Math.random() * 127;
   randomValues.slider = Math.random() * 127;
   randomValues.numbox = Math.random() * 127;
   randomValues.button = Math.random() > 0.5;
   randomValues.menu = Math.floor(Math.random() * 3);
-  parameters.recallParams(randomValues);
+  parameterUIs[index].recallParams(randomValues);
 }
 
 // .ts files with this at the end become a script usable in a [js] or [jsui] object

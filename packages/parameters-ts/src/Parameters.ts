@@ -30,7 +30,7 @@ class ParametersUI<ParamsType> {
    * @param params  Object of type ParamsType containing values to recall.
    */
   constructor(patcherID: string, params: ParamsType) {
-    this.params = params;
+    this.params = { ...params };
     this.id = patcherID;
     this.gui = patcher.getnamed(this.id).subpatcher();
     if (this.gui == undefined) {
