@@ -4,4 +4,10 @@
 
 ### Minor Changes
 
+- 92ae80d: test rel again
+
+## 0.1.0
+
+### Minor Changes
+
 - 32ecb65: first test release
