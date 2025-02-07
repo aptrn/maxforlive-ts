@@ -2,43 +2,353 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 8,
-			"minor" : 6,
-			"revision" : 5,
+			"major" : 9,
+			"minor" : 0,
+			"revision" : 4,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2526.0, 77.0, 2020.0, 1289.0 ],
-		"bglocked" : 0,
-		"openinpresentation" : 0,
-		"default_fontsize" : 12.0,
-		"default_fontface" : 0,
-		"default_fontname" : "Arial",
-		"gridonopen" : 1,
+		"rect" : [ -2496.0, 85.0, 1729.0, 1273.0 ],
 		"gridsize" : [ 8.0, 8.0 ],
 		"gridsnaponopen" : 2,
 		"objectsnaponopen" : 0,
-		"statusbarvisible" : 2,
-		"toolbarvisible" : 1,
-		"lefttoolbarpinned" : 0,
-		"toptoolbarpinned" : 0,
-		"righttoolbarpinned" : 0,
-		"bottomtoolbarpinned" : 0,
-		"toolbars_unpinned_last_save" : 0,
-		"tallnewobj" : 0,
 		"boxanimatetime" : 500,
-		"enablehscroll" : 1,
-		"enablevscroll" : 1,
-		"devicewidth" : 0.0,
-		"description" : "",
-		"digest" : "",
-		"tags" : "",
 		"style" : "default",
 		"subpatcher_template" : "Max Audio Effect_template",
-		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
+					"embed" : 1,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-36",
+					"lockeddragscroll" : 0,
+					"lockedsize" : 0,
+					"maxclass" : "bpatcher",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patcher" : 					{
+						"fileversion" : 1,
+						"appversion" : 						{
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 4,
+							"architecture" : "x64",
+							"modernui" : 1
+						}
+,
+						"classnamespace" : "box",
+						"rect" : [ 59.0, 107.0, 1000.0, 780.0 ],
+						"gridsize" : [ 15.0, 15.0 ],
+						"subpatcher_template" : "Max Audio Effect_template",
+						"boxes" : [ 							{
+								"box" : 								{
+									"id" : "obj-2",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 179.0, 45.0, 391.0, 20.0 ],
+									"text" : "This is a double nested parameter bpatcher!"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"bgmode" : 0,
+									"border" : 0,
+									"clickthrough" : 0,
+									"embed" : 1,
+									"enablehscroll" : 0,
+									"enablevscroll" : 0,
+									"id" : "obj-6",
+									"lockeddragscroll" : 0,
+									"lockedsize" : 0,
+									"maxclass" : "bpatcher",
+									"numinlets" : 0,
+									"numoutlets" : 0,
+									"offset" : [ 0.0, 0.0 ],
+									"patcher" : 									{
+										"fileversion" : 1,
+										"appversion" : 										{
+											"major" : 9,
+											"minor" : 0,
+											"revision" : 4,
+											"architecture" : "x64",
+											"modernui" : 1
+										}
+,
+										"classnamespace" : "box",
+										"rect" : [ 59.0, 107.0, 1000.0, 780.0 ],
+										"gridsize" : [ 15.0, 15.0 ],
+										"subpatcher_template" : "Max Audio Effect_template",
+										"boxes" : [ 											{
+												"box" : 												{
+													"bgmode" : 0,
+													"border" : 0,
+													"clickthrough" : 0,
+													"enablehscroll" : 0,
+													"enablevscroll" : 0,
+													"id" : "obj-7",
+													"lockeddragscroll" : 0,
+													"lockedsize" : 0,
+													"maxclass" : "bpatcher",
+													"name" : "UI.maxpat",
+													"numinlets" : 0,
+													"numoutlets" : 0,
+													"offset" : [ 0.0, 0.0 ],
+													"patching_rect" : [ 42.0, 100.0, 400.0, 136.0 ],
+													"varname" : "nest",
+													"viewvisibility" : 1
+												}
+
+											}
+, 											{
+												"box" : 												{
+													"id" : "obj-2",
+													"maxclass" : "comment",
+													"numinlets" : 1,
+													"numoutlets" : 0,
+													"patching_rect" : [ 59.0, 60.0, 391.0, 20.0 ],
+													"text" : "This is a subpatcher with a  nested subpatcher with parameters to use!"
+												}
+
+											}
+, 											{
+												"box" : 												{
+													"angle" : 270.0,
+													"bgcolor" : [ 0.172137149796092, 0.172137100044002, 0.172137113045018, 0.0 ],
+													"border" : 2,
+													"bordercolor" : [ 0.0, 0.0, 0.0, 1.0 ],
+													"id" : "obj-5",
+													"maxclass" : "panel",
+													"mode" : 0,
+													"numinlets" : 1,
+													"numoutlets" : 0,
+													"patching_rect" : [ 24.0, 84.5, 452.0, 167.0 ],
+													"proportion" : 0.5
+												}
+
+											}
+, 											{
+												"box" : 												{
+													"background" : 1,
+													"bgcolor" : [ 1.0, 0.658824, 0.14902, 1.0 ],
+													"fontname" : "Arial Bold",
+													"hint" : "",
+													"id" : "obj-20",
+													"ignoreclick" : 1,
+													"legacytextcolor" : 1,
+													"maxclass" : "textbutton",
+													"numinlets" : 1,
+													"numoutlets" : 3,
+													"outlettype" : [ "", "", "int" ],
+													"parameter_enable" : 0,
+													"patching_rect" : [ 31.0, 60.0, 20.0, 20.0 ],
+													"rounded" : 60.0,
+													"text" : "3",
+													"textcolor" : [ 0.2, 0.2, 0.2, 1.0 ]
+												}
+
+											}
+ ],
+										"lines" : [  ],
+										"originid" : "pat-130"
+									}
+,
+									"patching_rect" : [ 50.0, 100.0, 520.0, 288.0 ],
+									"varname" : "sub",
+									"viewvisibility" : 1
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"angle" : 270.0,
+									"bgcolor" : [ 0.172137149796092, 0.172137100044002, 0.172137113045018, 0.0 ],
+									"border" : 2,
+									"bordercolor" : [ 0.0, 0.0, 0.0, 1.0 ],
+									"id" : "obj-5",
+									"maxclass" : "panel",
+									"mode" : 0,
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 26.0, 80.0, 571.0, 332.0 ],
+									"proportion" : 0.5
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"background" : 1,
+									"bgcolor" : [ 1.0, 0.658824, 0.14902, 1.0 ],
+									"fontname" : "Arial Bold",
+									"hint" : "",
+									"id" : "obj-20",
+									"ignoreclick" : 1,
+									"legacytextcolor" : 1,
+									"maxclass" : "textbutton",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "", "", "int" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 151.0, 45.0, 20.0, 20.0 ],
+									"rounded" : 60.0,
+									"text" : "4",
+									"textcolor" : [ 0.2, 0.2, 0.2, 1.0 ]
+								}
+
+							}
+ ],
+						"lines" : [  ],
+						"originid" : "pat-127"
+					}
+,
+					"patching_rect" : [ 1032.0, 728.0, 648.0, 440.0 ],
+					"varname" : "very",
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-33",
+					"maxclass" : "button",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 696.0, 608.0, 24.0, 24.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-34",
+					"maxclass" : "toggle",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "int" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 16.0, 680.0, 24.0, 24.0 ],
+					"svg" : ""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
+					"embed" : 1,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-11",
+					"lockeddragscroll" : 0,
+					"lockedsize" : 0,
+					"maxclass" : "bpatcher",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patcher" : 					{
+						"fileversion" : 1,
+						"appversion" : 						{
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 4,
+							"architecture" : "x64",
+							"modernui" : 1
+						}
+,
+						"classnamespace" : "box",
+						"rect" : [ 59.0, 107.0, 1000.0, 780.0 ],
+						"gridsize" : [ 15.0, 15.0 ],
+						"subpatcher_template" : "Max Audio Effect_template",
+						"boxes" : [ 							{
+								"box" : 								{
+									"bgmode" : 0,
+									"border" : 0,
+									"clickthrough" : 0,
+									"enablehscroll" : 0,
+									"enablevscroll" : 0,
+									"id" : "obj-7",
+									"lockeddragscroll" : 0,
+									"lockedsize" : 0,
+									"maxclass" : "bpatcher",
+									"name" : "UI.maxpat",
+									"numinlets" : 0,
+									"numoutlets" : 0,
+									"offset" : [ 0.0, 0.0 ],
+									"patching_rect" : [ 42.0, 100.0, 400.0, 136.0 ],
+									"varname" : "nest",
+									"viewvisibility" : 1
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-2",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 59.0, 60.0, 391.0, 20.0 ],
+									"text" : "This is a subpatcher with a  nested subpatcher with parameters to use!"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"angle" : 270.0,
+									"bgcolor" : [ 0.172137149796092, 0.172137100044002, 0.172137113045018, 0.0 ],
+									"border" : 2,
+									"bordercolor" : [ 0.0, 0.0, 0.0, 1.0 ],
+									"id" : "obj-5",
+									"maxclass" : "panel",
+									"mode" : 0,
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 24.0, 84.5, 452.0, 167.0 ],
+									"proportion" : 0.5
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"background" : 1,
+									"bgcolor" : [ 1.0, 0.658824, 0.14902, 1.0 ],
+									"fontname" : "Arial Bold",
+									"hint" : "",
+									"id" : "obj-20",
+									"ignoreclick" : 1,
+									"legacytextcolor" : 1,
+									"maxclass" : "textbutton",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "", "", "int" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 31.0, 60.0, 20.0, 20.0 ],
+									"rounded" : 60.0,
+									"text" : "3",
+									"textcolor" : [ 0.2, 0.2, 0.2, 1.0 ]
+								}
+
+							}
+ ],
+						"lines" : [  ],
+						"originid" : "pat-106"
+					}
+,
+					"patching_rect" : [ 1064.0, 384.0, 520.0, 288.0 ],
+					"varname" : "sub",
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-32",
 					"linecount" : 2,
@@ -46,7 +356,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 88.0, 440.0, 504.0, 34.0 ],
-					"presentation_linecount" : 2,
 					"text" : "If found, will create the parameter infrastructure to get and set data. You can check the two bpatchers above before and after sending the init message to see what this does."
 				}
 
@@ -70,7 +379,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 536.0, 704.0, 432.0, 20.0 ],
-					"presentation_linecount" : 2,
 					"text" : "Or you can reset all parameters in a patcher to default values using \"reset $1\"."
 				}
 
@@ -94,7 +402,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 312.0, 648.0, 392.0, 20.0 ],
-					"presentation_linecount" : 2,
 					"text" : "Or you can randomize all parameters in a patcher using \"randomize $1\"."
 				}
 
@@ -130,7 +437,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 776.0, 127.647057473659515, 552.0, 34.0 ],
-					"presentation_linecount" : 2,
 					"text" : "It contains UI objects with scripting name reflecting the TestParameterType defined in typescript and has already the infrastructure to interact with typescript."
 				}
 
@@ -210,7 +516,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 176.0, 576.0, 368.0, 34.0 ],
+					"patching_rect" : [ 176.0, 576.0, 369.0, 34.0 ],
 					"text" : "In this example you can get one of the two patcher and printing it to console using \"get $1\"."
 				}
 
@@ -457,6 +763,30 @@
 				}
 
 			}
+, 			{
+				"box" : 				{
+					"id" : "obj-23",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 24.0, 712.0, 80.0, 22.0 ],
+					"text" : "autowatch $1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-35",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 16.0, 792.0, 50.0, 22.0 ],
+					"text" : "compile"
+				}
+
+			}
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
@@ -476,6 +806,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-2", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-23", 0 ]
 				}
 
 			}
@@ -502,18 +839,50 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-25", 0 ],
+					"source" : [ "obj-33", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-23", 0 ],
+					"source" : [ "obj-34", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-35", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-8", 0 ]
 				}
 
 			}
  ],
+		"originid" : "pat-103",
 		"parameters" : 		{
+			"obj-11::obj-7::obj-3" : [ "dial[3]", "dial", 0 ],
+			"obj-11::obj-7::obj-4" : [ "slider[3]", "slider", 0 ],
+			"obj-11::obj-7::obj-5" : [ "numbox[3]", "numbox", 0 ],
+			"obj-11::obj-7::obj-6" : [ "button[3]", "button", 0 ],
+			"obj-11::obj-7::obj-7" : [ "menu[3]", "menu", 0 ],
 			"obj-15::obj-3" : [ "dial[2]", "dial", 0 ],
 			"obj-15::obj-4" : [ "slider[2]", "slider", 0 ],
 			"obj-15::obj-5" : [ "numbox[2]", "numbox", 0 ],
 			"obj-15::obj-6" : [ "button[2]", "button", 0 ],
 			"obj-15::obj-7" : [ "menu[2]", "menu", 0 ],
+			"obj-36::obj-6::obj-7::obj-3" : [ "dial[4]", "dial", 0 ],
+			"obj-36::obj-6::obj-7::obj-4" : [ "slider[4]", "slider", 0 ],
+			"obj-36::obj-6::obj-7::obj-5" : [ "numbox[4]", "numbox", 0 ],
+			"obj-36::obj-6::obj-7::obj-6" : [ "button[4]", "button", 0 ],
+			"obj-36::obj-6::obj-7::obj-7" : [ "menu[4]", "menu", 0 ],
 			"obj-7::obj-3" : [ "dial", "dial", 0 ],
 			"obj-7::obj-4" : [ "slider", "slider", 0 ],
 			"obj-7::obj-5" : [ "numbox", "numbox", 0 ],
@@ -529,6 +898,26 @@
 			}
 ,
 			"parameter_overrides" : 			{
+				"obj-11::obj-7::obj-3" : 				{
+					"parameter_longname" : "dial[3]"
+				}
+,
+				"obj-11::obj-7::obj-4" : 				{
+					"parameter_longname" : "slider[3]"
+				}
+,
+				"obj-11::obj-7::obj-5" : 				{
+					"parameter_longname" : "numbox[3]"
+				}
+,
+				"obj-11::obj-7::obj-6" : 				{
+					"parameter_longname" : "button[3]"
+				}
+,
+				"obj-11::obj-7::obj-7" : 				{
+					"parameter_longname" : "menu[3]"
+				}
+,
 				"obj-15::obj-3" : 				{
 					"parameter_longname" : "dial[2]"
 				}
@@ -547,6 +936,26 @@
 ,
 				"obj-15::obj-7" : 				{
 					"parameter_longname" : "menu[2]"
+				}
+,
+				"obj-36::obj-6::obj-7::obj-3" : 				{
+					"parameter_longname" : "dial[4]"
+				}
+,
+				"obj-36::obj-6::obj-7::obj-4" : 				{
+					"parameter_longname" : "slider[4]"
+				}
+,
+				"obj-36::obj-6::obj-7::obj-5" : 				{
+					"parameter_longname" : "numbox[4]"
+				}
+,
+				"obj-36::obj-6::obj-7::obj-6" : 				{
+					"parameter_longname" : "button[4]"
+				}
+,
+				"obj-36::obj-6::obj-7::obj-7" : 				{
+					"parameter_longname" : "menu[4]"
 				}
 ,
 				"obj-7::obj-3" : 				{
@@ -576,28 +985,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "ExampleParameters.js",
-				"bootpath" : "~/Documents/Code/maxforlive-ts/apps/maxmsp-test/Code",
+				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Code",
 				"patcherrelativepath" : "../Code",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "UI.maxpat",
-				"bootpath" : "~/Documents/Code/maxforlive-ts/apps/maxmsp-test/Patchers",
+				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "UI_alreadyCreated.maxpat",
-				"bootpath" : "~/Documents/Code/maxforlive-ts/apps/maxmsp-test/Patchers",
+				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "params_index.js",
-				"bootpath" : "~/Documents/Code/maxforlive-ts/apps/maxmsp-test/Code/lib/@aptrn-parameters-ts",
+				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Code/lib/@aptrn-parameters-ts",
 				"patcherrelativepath" : "../Code/lib/@aptrn-parameters-ts",
 				"type" : "TEXT",
 				"implicit" : 1

@@ -15,7 +15,8 @@ type containsParam<ParamsType> = {
  */
 class ParametersUI<ParamsType> {
   params: ParamsType;
-  gui: Patcher;
+  gui: Patcher
+  parent: Patcher | undefined;
   id: string;
   iter: number = 0;
   paramsD: Dict | undefined;
@@ -28,11 +29,25 @@ class ParametersUI<ParamsType> {
    * Constructor of the UI infrastructure. Checks if infrastructure exists, creates it if not found or broken. Once created recalls parameters with the params argument object.
    * @param patcherID ID of the subpatcher containing the UI.
    * @param params  Object of type ParamsType containing values to recall.
+   * @param parent Optional parent patcher. If provided, the subpatcher will be searched for within the parent patcher instead of the main patcher.
    */
-  constructor(patcherID: string, params: ParamsType) {
+  constructor(patcherID: string, params: ParamsType, parentID?: string[]) {
     this.params = { ...params };
     this.id = patcherID;
-    this.gui = patcher.getnamed(this.id).subpatcher();
+    if(parentID != undefined && parentID.length > 0){
+      this.parent = patcher.getnamed(parentID[0]).subpatcher();
+      if(parentID.length > 1){
+        let g = this.parent;
+        for(let i = 1; i < parentID.length; i++){
+          g = g.getnamed(parentID[i]).subpatcher();
+        }
+        this.parent = g;
+      }
+      this.gui = this.parent.getnamed(this.id).subpatcher();
+    }
+    else{
+      this.gui = patcher.getnamed(this.id).subpatcher();
+    }
     if (this.gui == undefined) {
       throw new Error(
         "Subpatcher with ID = " + this.id + "  not found, aborting!"

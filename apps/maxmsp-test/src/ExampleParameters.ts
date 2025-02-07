@@ -30,7 +30,10 @@ function init() {
       defaultParams
     );
   }
+  parameterUIs[2] = new ParametersUI<TestParameterType>("nest", defaultParams, ["sub"]);
+  parameterUIs[3] = new ParametersUI<TestParameterType>("nest", defaultParams, ["very", "sub"]);
 }
+
 
 function get() {
   let index: number = arguments[0];
