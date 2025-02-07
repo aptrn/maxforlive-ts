@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.1
+
+### Patch Changes
+
+- 196017d: working for nested subpatches
+
 ## 0.1.0
 
 ### Minor Changes
