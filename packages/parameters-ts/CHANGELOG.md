@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.2
+
+### Patch Changes
+
+- b85699c: updated files
+
 ## 0.1.1
 
 ### Patch Changes
