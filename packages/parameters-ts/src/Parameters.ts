@@ -14,7 +14,7 @@ type containsParam<ParamsType> = {
  * Class to interact with patcher parameters UI.
  */
 class ParametersUI<ParamsType> {
-  params: ParamsType;
+  values: ParamsType;
   gui: Patcher
   parent: Patcher | undefined;
   id: string;
@@ -28,11 +28,11 @@ class ParametersUI<ParamsType> {
   /**
    * Constructor of the UI infrastructure. Checks if infrastructure exists, creates it if not found or broken. Once created recalls parameters with the params argument object.
    * @param patcherID ID of the subpatcher containing the UI.
-   * @param params  Object of type ParamsType containing values to recall.
+   * @param newValues  Object of type ParamsType containing values to recall.
    * @param parent Optional parent patcher. If provided, the subpatcher will be searched for within the parent patcher instead of the main patcher.
    */
-  constructor(patcherID: string, params: ParamsType, parentID?: string[]) {
-    this.params = { ...params };
+  constructor(patcherID: string, newValues: ParamsType, parentID?: string[]) {
+    this.values = { ...newValues };
     this.id = patcherID;
     if(parentID != undefined && parentID.length > 0){
       this.parent = patcher.getnamed(parentID[0]).subpatcher();
@@ -159,8 +159,8 @@ class ParametersUI<ParamsType> {
    */
   private createContainsParam(): containsParam<ParamsType> {
     const result = {} as containsParam<ParamsType>;
-    for (const key in this.params) {
-      if (Object.prototype.hasOwnProperty.call(this.params, key)) {
+    for (const key in this.values) {
+      if (Object.prototype.hasOwnProperty.call(this.values, key)) {
         (result as any)[`has_${key}`] = false;
       }
     }
@@ -228,7 +228,7 @@ class ParametersUI<ParamsType> {
         if (objectClass == "pvar") {
           let scriptingName = obj.varname.split("_pvar")[0];
           if (
-            Object.prototype.hasOwnProperty.call(this.params, scriptingName)
+            Object.prototype.hasOwnProperty.call(this.values, scriptingName)
           ) {
             let unpack = this.gui.getnamed(scriptingName + "_unpack");
             let prepend = this.gui.getnamed(scriptingName + "_prepend");
@@ -264,12 +264,12 @@ class ParametersUI<ParamsType> {
       this.cleanParameters();
       post("Creating parameters!" + "\n");
       if (newParams != undefined) {
-        this.params = newParams;
+        this.values = newParams;
       }
 
       this.iter = 0;
 
-      for (let k in this.params) {
+      for (let k in this.values) {
         let unpack = this.gui.newdefault(
           50 + 150 * this.iter,
           100 + 100,
@@ -321,8 +321,8 @@ class ParametersUI<ParamsType> {
       post("Parameters already exist!" + "\n");
     }
 
-    this.recallParams(this.params);
-    this.getParams();
+    this.set(this.values);
+    this.fetch();
   }
 
   /**
@@ -340,7 +340,7 @@ class ParametersUI<ParamsType> {
         if (objectClass == "pvar") {
           scriptingName = obj.varname.split("_pvar")[0];
           if (
-            Object.prototype.hasOwnProperty.call(this.params, scriptingName)
+            Object.prototype.hasOwnProperty.call(this.values, scriptingName)
           ) {
             let unpack = this.gui.getnamed(scriptingName + "_unpack");
             let prepend = this.gui.getnamed(scriptingName + "_prepend");
@@ -365,10 +365,10 @@ class ParametersUI<ParamsType> {
    * This function gets parameter values from the "id" Dict, sets this.params and returns it
    * @returns {ParamsType}
    */
-  getParams(): ParamsType {
+  fetch(): ParamsType {
     if (this.paramsD != undefined) {
-      this.params = JSON.parse(this.paramsD.stringify());
-      return this.params;
+      this.values = JSON.parse(this.paramsD.stringify());
+      return this.values;
     } else {
       throw new Error(
         this.id +
@@ -382,11 +382,11 @@ class ParametersUI<ParamsType> {
    * @param newParams New parameter values
    * @returns {void}
    */
-  recallParams(newParams: ParamsType): void {
+  set(newParams: ParamsType): void {
     if (this.recallD != undefined && this.recallObj != undefined) {
-      this.params = newParams;
+      this.values = newParams;
       this.recallD.clear();
-      this.recallD.parse(JSON.stringify(this.params));
+      this.recallD.parse(JSON.stringify(this.values));
       this.recallObj.message("bang");
     } else {
       throw new Error("You need to create infrastructure first");

@@ -37,13 +37,13 @@ function init() {
 
 function get() {
   let index: number = arguments[0];
-  let paramValues = parameterUIs[index].getParams();
+  let paramValues = parameterUIs[index].fetch();
   post("Params: " + JSON.stringify(paramValues) + "\n");
 }
 
 function reset() {
   let index: number = arguments[0];
-  parameterUIs[index].recallParams(defaultParams);
+  parameterUIs[index].set(defaultParams);
 }
 
 function randomize() {
@@ -54,7 +54,7 @@ function randomize() {
   randomValues.numbox = Math.random() * 127;
   randomValues.button = Math.random() > 0.5;
   randomValues.menu = Math.floor(Math.random() * 3);
-  parameterUIs[index].recallParams(randomValues);
+  parameterUIs[index].set(randomValues);
 }
 
 // .ts files with this at the end become a script usable in a [js] or [jsui] object

@@ -14,7 +14,7 @@
     "type-check": "tsc --noEmit"
   },
   "files": [
-    "dist",
+    "dist/**/*",
     "README.md"
   ],
   "exports": {
