@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.4
+
+### Patch Changes
+
+- 3b3cfad: update logs
+
 ## 0.1.3
 
 ### Patch Changes
