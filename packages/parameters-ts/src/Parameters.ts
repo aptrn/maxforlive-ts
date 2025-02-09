@@ -18,7 +18,7 @@ class ParametersUI<ParamsType> {
   gui: Patcher
   parent: Patcher | undefined;
   id: string;
-  iter: number = 0;
+  iter: number;
   paramsD: Dict | undefined;
   paramsObj: Maxobj | undefined;
   recallD: Dict | undefined;
@@ -32,8 +32,9 @@ class ParametersUI<ParamsType> {
    * @param parent Optional parent patcher. If provided, the subpatcher will be searched for within the parent patcher instead of the main patcher.
    */
   constructor(patcherID: string, newValues: ParamsType, parentID?: string[]) {
-    this.values = { ...newValues };
+    this.values = Object.assign({}, newValues);
     this.id = patcherID;
+    this.iter = 0;
     if(parentID != undefined && parentID.length > 0){
       this.parent = patcher.getnamed(parentID[0]).subpatcher();
       if(parentID.length > 1){
@@ -164,10 +165,10 @@ class ParametersUI<ParamsType> {
    * @returns Object of type containtsParam<ParamsType> used to check if parameters are existing.
    */
   createContainsParam(): containsParam<ParamsType> {
-    const result = {} as containsParam<ParamsType>;
+    const result = Object.create(null) as containsParam<ParamsType>;
     for (const key in this.values) {
       if (Object.prototype.hasOwnProperty.call(this.values, key)) {
-        (result as any)[`has_${key}`] = false;
+        (result as any)['has_' + key] = false;
       }
     }
     return result;
@@ -184,7 +185,7 @@ class ParametersUI<ParamsType> {
     paramName: string,
     exists: boolean
   ): void {
-    const key = `has_${paramName as string}`;
+    const key = 'has_' + paramName;
     (hasParams as any)[key] = exists;
   }
 
@@ -198,7 +199,7 @@ class ParametersUI<ParamsType> {
     hasParams: containsParam<ParamsType>,
     paramName: string
   ): boolean {
-    const key = `has_${paramName as string}`;
+    const key = 'has_' + paramName;
     return (hasParams as any)[key];
   }
 
