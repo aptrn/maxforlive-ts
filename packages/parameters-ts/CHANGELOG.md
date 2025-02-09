@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.6
+
+### Patch Changes
+
+- b61ecad: es5 tests
+
 ## 0.1.5
 
 ### Patch Changes
