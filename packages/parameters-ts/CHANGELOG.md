@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.7
+
+### Patch Changes
+
+- 62ab9b5: still es5 fix
+
 ## 0.1.6
 
 ### Patch Changes
