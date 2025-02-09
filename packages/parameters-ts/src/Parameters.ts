@@ -99,6 +99,7 @@ class ParametersUI<ParamsType> {
    */
   createInfrastructure(): void {
     if (this.infrastructureExists() == false) {
+      post("Cleaning infrastructure!" + "\n");
       this.cleanInfrastructure();
 
       let idObj: Maxobj = this.gui.getnamed("id");
@@ -117,8 +118,13 @@ class ParametersUI<ParamsType> {
       this.paramsD = new Dict(this.id); //used to get parameters values
       this.updateObj = this.gui.newdefault(50, 700, "s", "---update"); //create a dict object instance called "thid.id_update"
       this.updateObj.varname = "update";
+      post("Infrastructure created!" + "\n");
+    }
+    else{
+      post("Infrastructure already exists!" + "\n");
     }
   }
+
 
   /**
    * This function should clear "id" Dict, "id_recall" Dict and "---update" Send objects.
