@@ -99,8 +99,8 @@ importers:
         specifier: ^29.5.13
         version: 29.5.13
       '@types/maxmsp':
-        specifier: ^1.0.12
-        version: 1.0.12
+        specifier: ^1.0.13
+        version: 1.0.13
       '@types/node':
         specifier: ^22.7.4
         version: 22.7.5
@@ -681,6 +681,9 @@ packages:
 
   '@types/maxmsp@1.0.12':
     resolution: {integrity: sha512-KU6rJkMIujhCKAXMhaxwZ7KNf8nRRipNZZhl5Rra+/tfI1sCnUJ6mFH2ROnLKKtiEm22H0Ui2N4YgHPcpXx7Mw==}
+
+  '@types/maxmsp@1.0.13':
+    resolution: {integrity: sha512-lFIoNKOcO/8zaZTP8EbnHsO4ZevaevLRR/7kX1gxPgtld7vMGErhNvsgE5H/1DVX0aEqrqbkCRLW9U1b9hgt1Q==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -2832,6 +2835,8 @@ snapshots:
       pretty-format: 29.7.0
 
   '@types/maxmsp@1.0.12': {}
+
+  '@types/maxmsp@1.0.13': {}
 
   '@types/mdast@4.0.4':
     dependencies:
