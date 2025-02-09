@@ -32,7 +32,12 @@ class ParametersUI<ParamsType> {
    * @param parent Optional parent patcher. If provided, the subpatcher will be searched for within the parent patcher instead of the main patcher.
    */
   constructor(patcherID: string, newValues: ParamsType, parentID?: string[]) {
-    this.values = Object.assign({}, newValues);
+    this.values = {} as ParamsType;
+    for (var key in newValues) {
+      if (Object.prototype.hasOwnProperty.call(newValues, key)) {
+        (this.values as any)[key] = newValues[key];
+      }
+    }
     this.id = patcherID;
     this.iter = 0;
     if(parentID != undefined && parentID.length > 0){
