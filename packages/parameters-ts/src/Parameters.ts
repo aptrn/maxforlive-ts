@@ -163,7 +163,7 @@ class ParametersUI<ParamsType> {
    * Creates an Object of type containtsParam<ParamsType> with all properties set to false.
    * @returns Object of type containtsParam<ParamsType> used to check if parameters are existing.
    */
-  private createContainsParam(): containsParam<ParamsType> {
+  createContainsParam(): containsParam<ParamsType> {
     const result = {} as containsParam<ParamsType>;
     for (const key in this.values) {
       if (Object.prototype.hasOwnProperty.call(this.values, key)) {
@@ -179,7 +179,7 @@ class ParametersUI<ParamsType> {
    * @param paramName Property name.
    * @param exists  Boolean value to set.
    */
-  private setParamExists<K extends keyof ParamsType>(
+  setParamExists<K extends keyof ParamsType>(
     hasParams: containsParam<ParamsType>,
     paramName: string,
     exists: boolean
@@ -194,7 +194,7 @@ class ParametersUI<ParamsType> {
    * @param paramName Property name.
    * @returns Boolean value of the property.
    */
-  private getParamExists<K extends keyof ParamsType>(
+  getParamExists<K extends keyof ParamsType>(
     hasParams: containsParam<ParamsType>,
     paramName: string
   ): boolean {
@@ -207,7 +207,7 @@ class ParametersUI<ParamsType> {
    * @param hasParams Object of type containtsParam<ParamType> used to check if parameters are existing.
    * @returns Boolean value, true if all parameters exist, false otherwise.
    */
-  private allParamsExist<ParamType>(
+  allParamsExist<ParamType>(
     hasParams: containsParam<ParamType>
   ): boolean {
     for (const key in hasParams) {
