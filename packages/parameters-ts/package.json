@@ -1,6 +1,6 @@
 {
   "name": "@aptrn/parameters-ts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Typescript library to manage MaxMsp UI",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
