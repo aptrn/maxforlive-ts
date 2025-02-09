@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.5
+
+### Patch Changes
+
+- 24d2172: removed private
+
 ## 0.1.4
 
 ### Patch Changes
