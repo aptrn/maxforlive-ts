@@ -105,7 +105,7 @@ class ParametersUI<ParamsType> {
    */
   createInfrastructure(): void {
     if (this.infrastructureExists() == false) {
-      post("Cleaning infrastructure!" + "\n");
+      //post("Cleaning infrastructure!" + "\n");
       this.cleanInfrastructure();
 
       let idObj: Maxobj = this.gui.getnamed("id");
@@ -124,10 +124,10 @@ class ParametersUI<ParamsType> {
       this.paramsD = new Dict(this.id); //used to get parameters values
       this.updateObj = this.gui.newdefault(50, 700, "s", "---update"); //create a dict object instance called "thid.id_update"
       this.updateObj.varname = "update";
-      post("Infrastructure created!" + "\n");
+      //post("Infrastructure created!" + "\n");
     }
     else{
-      post("Infrastructure already exists!" + "\n");
+      //post("Infrastructure already exists!" + "\n");
     }
   }
 
@@ -270,11 +270,11 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   createParameters(newParams?: ParamsType): void {
-    post("Checking Parameters" + "\n");
+    //post("Checking Parameters" + "\n");
     if (this.parametersExist() == false) {
-      post("Not all parameteres exist already!" + "\n");
+      //post("Not all parameteres exist already!" + "\n");
       this.cleanParameters();
-      post("Creating parameters!" + "\n");
+      //post("Creating parameters!" + "\n");
       if (newParams != undefined) {
         this.values = newParams;
       }
@@ -328,9 +328,9 @@ class ParametersUI<ParamsType> {
 
         this.iter++;
       }
-      post("Finished creating parameters!" + "\n");
+      //post("Finished creating parameters!" + "\n");
     } else {
-      post("Parameters already exist!" + "\n");
+      //post("Parameters already exist!" + "\n");
     }
 
     this.set(this.values);
@@ -342,7 +342,7 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   cleanParameters(): void {
-    post("Cleaning parameters!" + "\n");
+    //post("Cleaning parameters!" + "\n");
 
     if (this.gui.count > 0) {
       let obj = this.gui.firstobject;

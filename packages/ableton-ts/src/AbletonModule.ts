@@ -111,7 +111,7 @@ class AbletonLive {
   getSelectedClipName(): string {
     this.Live.path = "live_set view detail_clip";
     let name: string = this.Live.get("name");
-    post("CONTEXT Get Name: " + name + "\n");
+    //post("CONTEXT Get Name: " + name + "\n");
     if (name != "") {
       return String(name);
     } else {
