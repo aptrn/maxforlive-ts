@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.8
+
+### Patch Changes
+
+- 7e1b1f8: remove debug prints
+
 ## 0.1.7
 
 ### Patch Changes
