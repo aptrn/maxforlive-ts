@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.10
+
+### Patch Changes
+
+- a5f6535: test fix dial parameter range
+
 ## 0.1.9
 
 ### Patch Changes
