@@ -404,4 +404,25 @@ class ParametersUI<ParamsType> {
       throw new Error("You need to create infrastructure first");
     }
   }
+
+  
+  setLiveParameter(dial: Maxobj, name: string, min: number, max: number, defaultValue: number, enums?: string[], isFloat: boolean = false): void{
+    if(name != undefined){
+      dial.message("_parameter_shortname", name);
+    }
+    if(enums != undefined){
+      dial.message("_parameter_type", 2);
+      dial.message("_parameter_range", enums);  
+    }else if (isFloat){
+      dial.message("_parameter_type", 1);
+      dial.message("_parameter_range", [min, max]);
+    }else{
+      dial.message("_parameter_type", 0);
+      dial.message("_parameter_range", [min, max]);
+    }
+    if(defaultValue != undefined){
+      dial.message("_parameter_initial", defaultValue);
+    }
+    return;
+  }
 }
