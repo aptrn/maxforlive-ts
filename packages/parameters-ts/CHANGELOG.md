@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.9
+
+### Patch Changes
+
+- 220dcc5: add setLiveParameter method
+
 ## 0.1.8
 
 ### Patch Changes
