@@ -394,19 +394,48 @@ class ParametersUI<ParamsType> {
    * @param newParams New parameter values
    * @returns {void}
    */
-  set(newParams: ParamsType): void {
+  set(newParams: ParamsType, update: boolean = true): void {
     if (this.recallD != undefined && this.recallObj != undefined) {
       this.values = newParams;
       this.recallD.clear();
       this.recallD.parse(JSON.stringify(this.values));
-      this.recallObj.message("bang");
+      if(update){
+        this.recallObj.message("bang");
+      }
     } else {
       throw new Error("You need to create infrastructure first");
     }
   }
 
-  
-  setLiveParameter(dial: Maxobj, name: string, min: number, max: number, defaultValue: number, enums?: string[], isFloat: boolean = false): void{
+  /**
+   * This function sets a live parameter to the dial object.
+   * @param dial Maxobj object, accepts only live.* objects (like live.dial, live.slider, live.numbox, live.text, live.menu etc.). This can also be a patcher object, in which case the parameter will be set to the named object.
+   * @param name Parameter name.
+   * @param min Minimum value.
+   * @param max Maximum value.
+   * @param defaultValue Default value.
+   * @param enums Optional array of strings. This automatically sets parameter type to "enum".
+   * @param isFloat Optional boolean. This automatically sets parameter type to "float" if true, integer otherwise.
+   * @param parents Optional array of strings. This is used to set the parameter to a nested parameter.
+   * @returns {void}
+   */
+  setLiveParameter(dial: Maxobj | Patcher, name: string, min: number, max: number, defaultValue: number, enums?: string[], isFloat: boolean = false, parents?: string[]): void{
+    if(dial instanceof Patcher){
+      let id = name;
+
+      if(parents != undefined && parents.length > 0){
+        let parent = patcher.getnamed(parents[0]).subpatcher();
+        if(parents.length > 1){
+          let g = parent;
+          for(let i = 1; i < parents.length; i++){
+            g = g.getnamed(parents[i]).subpatcher();
+          }
+          parent = g;
+        }
+        dial = dial.getnamed(id).subpatcher();
+      }
+    }
+    
     if(name != undefined){
       dial.message("_parameter_shortname", name);
     }
@@ -425,4 +454,4 @@ class ParametersUI<ParamsType> {
     }
     return;
   }
-}
+} 
