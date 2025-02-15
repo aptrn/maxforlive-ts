@@ -64,7 +64,7 @@ class ParametersUI<ParamsType> {
   }
 
   /**
-   * This function checks if the infrastructure exists ("id" Dict, "id_recall" Dict and "---update" Send objects).
+   * This function checks if the infrastructure exists ("id" Dict, "id_recall" Dict and "update" Send objects).
    * @returns {boolean} True if infrastructure exists, false otherwise
    */
   infrastructureExists(): boolean {
@@ -100,7 +100,7 @@ class ParametersUI<ParamsType> {
   }
 
   /**
-   * This function creates a "Dict" object named "id", a "Dict" object named "id_recall" and a Send object with target "---update"
+   * This function creates a "Dict" object named "id", a "Dict" object named "id_recall" and a Send object with target "update"
    * @returns {void}
    */
   createInfrastructure(): void {
@@ -122,7 +122,7 @@ class ParametersUI<ParamsType> {
       this.paramsObj = this.gui.newdefault(200, 700, "dict", this.id); //create a dict object instance called "thid.id"
       this.paramsObj.varname = "params";
       this.paramsD = new Dict(this.id); //used to get parameters values
-      this.updateObj = this.gui.newdefault(50, 700, "s", "---update"); //create a dict object instance called "thid.id_update"
+      this.updateObj = this.gui.newdefault(50, 700, "s", "update"); //create a dict object instance called "thid.id_update"
       this.updateObj.varname = "update";
       //post("Infrastructure created!" + "\n");
     }
@@ -133,7 +133,7 @@ class ParametersUI<ParamsType> {
 
 
   /**
-   * This function should clear "id" Dict, "id_recall" Dict and "---update" Send objects.
+   * This function should clear "id" Dict, "id_recall" Dict and "update" Send objects.
    * @returns {void}
    */
   cleanInfrastructure(): void {
