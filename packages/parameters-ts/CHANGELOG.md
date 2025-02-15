@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.11
+
+### Patch Changes
+
+- bfd8cb4: removed "---" from ids
+
 ## 0.1.10
 
 ### Patch Changes
