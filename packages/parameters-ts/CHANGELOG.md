@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.13
+
+### Patch Changes
+
+- afdfec5: added uniqueness via random char
+
 ## 0.1.12
 
 ### Patch Changes
