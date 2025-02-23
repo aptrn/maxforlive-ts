@@ -17,6 +17,7 @@ class ParametersUI<ParamsType> {
   values: ParamsType;
   gui: Patcher;
   id: string;
+  uniqueId: string;
   iter: number;
   paramsD: Dict | undefined;
   paramsObj: Maxobj | undefined;
@@ -25,13 +26,28 @@ class ParametersUI<ParamsType> {
   updateObj: Maxobj | undefined;
 
   /**
+   * Generates a random 8-character string of uppercase letters and numbers
+   * @returns {string} Random 8-character string
+   */
+  private generateRandomId(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 8; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result + '_';
+  }
+
+  /**
    * Constructor of the UI infrastructure. Checks if infrastructure exists, creates it if not found or broken.
    * Once created recalls parameters with the params argument object.
    * @param localpatcher The patcher containing the UI elements
    * @param patcherID ID string used for naming the infrastructure elements
    * @param newValues Object of type ParamsType containing values to recall
+   * @param unique If true, adds special characters to dict names to ensure uniqueness
+   * @param maxforlive If true with unique=true, uses "---" prefix, otherwise uses random string
    */
-  constructor(localpatcher: Patcher, patcherID: string, newValues: ParamsType, unique: boolean = false, maxforlive: boolean = false) {
+  constructor(localpatcher: Patcher, patcherID: string, newValues: ParamsType, unique: boolean = false) {
     this.values = {} as ParamsType;
     for (const key in newValues) {
       if (Object.prototype.hasOwnProperty.call(newValues, key)) {
@@ -45,8 +61,48 @@ class ParametersUI<ParamsType> {
     if (this.gui == undefined) {
       throw new Error("Invalid patcher provided, aborting!");
     }
+
+    // Try to get existing uniqueId from infrastructure
+    let existingPrefix = this.getExistingUniquePrefix();
+
+    // If we found an existing prefix, use it, otherwise generate new one if unique is true
+    this.uniqueId = existingPrefix !== null ?
+      existingPrefix + patcherID :
+      (unique ? this.generateRandomId() + patcherID : patcherID);
+
     this.createInfrastructure();
     this.createParameters();
+  }
+
+  /**
+   * Attempts to find existing unique prefix from dict objects in the patcher
+   * @returns {string | null} The existing prefix if found, null otherwise
+   */
+  private getExistingUniquePrefix(): string | null {
+    if (this.gui.count > 0) {
+      let obj = this.gui.firstobject;
+      while (obj.nextobject != null) {
+        if (obj.maxclass == "dict") {
+          if (obj.varname == "recall") {
+            const fullName = obj.getattr("name") as string;
+            const recallSuffix = this.id + "_recall";
+            if (fullName && fullName.indexOf(recallSuffix) === fullName.length - recallSuffix.length) {
+              const prefix = fullName.slice(0, -recallSuffix.length);
+              return prefix || null;
+            }
+          }
+          if (obj.varname == "params") {
+            const fullName = obj.getattr("name") as string;
+            if (fullName && fullName.indexOf(this.id) === fullName.length - this.id.length) {
+              const prefix = fullName.slice(0, -this.id.length);
+              return prefix || null;
+            }
+          }
+        }
+        obj = obj.nextobject;
+      }
+    }
+    return null;
   }
 
   /**
@@ -67,12 +123,12 @@ class ParametersUI<ParamsType> {
           if (obj.varname == "recall") {
             hasRecall = true;
             this.recallObj = obj;
-            this.recallD = new Dict(this.id + "_recall"); //used to write parameters values
+            this.recallD = new Dict(this.uniqueId + "_recall"); //used to write parameters values
           }
           if (obj.varname == "params") {
             hasParams = true;
             this.paramsObj = obj;
-            this.paramsD = new Dict(this.id); //used to get parameters values
+            this.paramsD = new Dict(this.uniqueId); //used to get parameters values
           }
         } else if (objectClass == "s" || objectClass == "send") {
           if (obj.varname == "update") {
@@ -99,20 +155,20 @@ class ParametersUI<ParamsType> {
       this.cleanInfrastructure();
 
       let idObj: Maxobj = this.gui.getnamed("id");
-      idObj.message("set", this.id);
+      idObj.message("set", this.uniqueId);
 
       this.recallObj = this.gui.newdefault(
         50,
         100,
         "dict",
-        this.id + "_recall"
+        this.uniqueId + "_recall"
       );
       this.recallObj.varname = "recall";
-      this.recallD = new Dict(this.id + "_recall");
+      this.recallD = new Dict(this.uniqueId + "_recall");
 
-      this.paramsObj = this.gui.newdefault(200, 700, "dict", this.id);
+      this.paramsObj = this.gui.newdefault(200, 700, "dict", this.uniqueId);
       this.paramsObj.varname = "params";
-      this.paramsD = new Dict(this.id);
+      this.paramsD = new Dict(this.uniqueId);
 
       let prependUpdate = this.gui.newdefault(50, 650, "prepend", this.id);
       prependUpdate.varname = "prependUpdate";
@@ -376,7 +432,7 @@ class ParametersUI<ParamsType> {
       return this.values;
     } else {
       throw new Error(
-        this.id +
+        this.uniqueId +
         " Dict cannot be found, you need to create infrastructure first"
       );
     }
@@ -388,6 +444,7 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   set(newParams: ParamsType, update: boolean = true): void {
+    let recallDict = this.gui.getnamed(this.uniqueId + "_recall") as any;
     if (this.recallD != undefined && this.recallObj != undefined) {
       this.values = newParams;
       this.recallD.clear();

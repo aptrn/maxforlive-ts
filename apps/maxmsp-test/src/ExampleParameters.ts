@@ -28,11 +28,10 @@ function init() {
     parameterUIs[patcherName] = new ParametersUI<TestParameterType>(
       patcher.getnamed(patcherNames[patcherName]).subpatcher(),
       patcherNames[patcherName],
-      defaultParams
-    );
+      defaultParams, true);
   }
-  parameterUIs[2] = new ParametersUI<TestParameterType>(patcher.getnamed("nest").subpatcher().getnamed("sub").subpatcher(), "nest", defaultParams);
-  parameterUIs[3] = new ParametersUI<TestParameterType>(patcher.getnamed("nest").subpatcher().getnamed("very").subpatcher().getnamed("sub").subpatcher(), "nest", defaultParams);
+  parameterUIs[2] = new ParametersUI<TestParameterType>(patcher.getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, true);
+  parameterUIs[3] = new ParametersUI<TestParameterType>(patcher.getnamed("very").subpatcher().getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, true);
 }
 
 

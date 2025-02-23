@@ -2,42 +2,22 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 8,
-			"minor" : 6,
-			"revision" : 5,
+			"major" : 9,
+			"minor" : 0,
+			"revision" : 4,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
 		"rect" : [ 292.0, 179.0, 957.0, 928.0 ],
-		"bglocked" : 0,
 		"openinpresentation" : 1,
-		"default_fontsize" : 12.0,
-		"default_fontface" : 0,
-		"default_fontname" : "Arial",
-		"gridonopen" : 1,
 		"gridsize" : [ 8.0, 8.0 ],
 		"gridsnaponopen" : 2,
 		"objectsnaponopen" : 0,
-		"statusbarvisible" : 2,
-		"toolbarvisible" : 1,
-		"lefttoolbarpinned" : 0,
-		"toptoolbarpinned" : 0,
-		"righttoolbarpinned" : 0,
-		"bottomtoolbarpinned" : 0,
-		"toolbars_unpinned_last_save" : 0,
-		"tallnewobj" : 0,
 		"boxanimatetime" : 500,
-		"enablehscroll" : 1,
-		"enablevscroll" : 1,
-		"devicewidth" : 0.0,
-		"description" : "",
-		"digest" : "",
-		"tags" : "",
 		"style" : "default",
 		"subpatcher_template" : "Max Audio Effect_template",
-		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-2",
@@ -57,6 +37,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 32.0, 72.0, 150.0, 18.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 200.0, 32.0, 150.0, 18.0 ],
 					"text" : "test",
 					"textjustification" : 0,
 					"varname" : "id"
@@ -77,9 +59,10 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_enum" : [ "one", "two", "three" ],
-							"parameter_longname" : "menu[2]",
+							"parameter_longname" : "menu",
 							"parameter_mmax" : 2,
 							"parameter_modmode" : 0,
+							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "menu",
 							"parameter_type" : 2
 						}
@@ -104,9 +87,10 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_enum" : [ "val1", "val2" ],
-							"parameter_longname" : "button[2]",
+							"parameter_longname" : "button",
 							"parameter_mmax" : 1,
 							"parameter_modmode" : 0,
+							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "button",
 							"parameter_type" : 2
 						}
@@ -130,8 +114,9 @@
 					"presentation_rect" : [ 152.0, 96.0, 44.0, 15.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "numbox[2]",
+							"parameter_longname" : "numbox",
 							"parameter_modmode" : 3,
+							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "numbox",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0
@@ -156,8 +141,9 @@
 					"presentation_rect" : [ 88.0, 16.0, 39.0, 95.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "slider[2]",
+							"parameter_longname" : "slider",
 							"parameter_modmode" : 3,
+							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "slider",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0
@@ -182,8 +168,9 @@
 					"presentation_rect" : [ 24.0, 64.0, 41.0, 48.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
-							"parameter_longname" : "dial[2]",
+							"parameter_longname" : "dial",
 							"parameter_modmode" : 3,
+							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "dial",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0
@@ -196,7 +183,8 @@
 
 			}
  ],
-		"lines" : [  ]
+		"lines" : [  ],
+		"originid" : "pat-880"
 	}
 
 }

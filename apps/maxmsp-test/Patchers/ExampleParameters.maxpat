@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -2496.0, 85.0, 1729.0, 1273.0 ],
+		"rect" : [ 134.0, 134.0, 1729.0, 1273.0 ],
 		"gridsize" : [ 8.0, 8.0 ],
 		"gridsnaponopen" : 2,
 		"objectsnaponopen" : 0,
@@ -18,6 +18,30 @@
 		"style" : "default",
 		"subpatcher_template" : "Max Audio Effect_template",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-37",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 712.0, 792.0, 93.0, 22.0 ],
+					"text" : "prepend update"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-6",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 712.0, 760.0, 87.0, 22.0 ],
+					"text" : "receive update"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"bgmode" : 0,
 					"border" : 0,
@@ -157,7 +181,7 @@
 											}
  ],
 										"lines" : [  ],
-										"originid" : "pat-130"
+										"originid" : "pat-758"
 									}
 ,
 									"patching_rect" : [ 50.0, 100.0, 520.0, 288.0 ],
@@ -205,7 +229,7 @@
 							}
  ],
 						"lines" : [  ],
-						"originid" : "pat-127"
+						"originid" : "pat-755"
 					}
 ,
 					"patching_rect" : [ 1032.0, 728.0, 648.0, 440.0 ],
@@ -339,7 +363,7 @@
 							}
  ],
 						"lines" : [  ],
-						"originid" : "pat-106"
+						"originid" : "pat-763"
 					}
 ,
 					"patching_rect" : [ 1064.0, 384.0, 520.0, 288.0 ],
@@ -617,7 +641,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 88.0, 848.0, 129.0, 22.0 ],
 					"saved_object_attributes" : 					{
-						"filename" : "ExampleParameters.js",
+						"filename" : "ExampleParameters",
 						"parameter_enable" : 0
 					}
 ,
@@ -861,12 +885,26 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-37", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-37", 0 ],
+					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
 					"source" : [ "obj-8", 0 ]
 				}
 
 			}
  ],
-		"originid" : "pat-103",
+		"originid" : "pat-752",
 		"parameters" : 		{
 			"obj-11::obj-7::obj-3" : [ "dial[3]", "dial", 0 ],
 			"obj-11::obj-7::obj-4" : [ "slider[3]", "slider", 0 ],
