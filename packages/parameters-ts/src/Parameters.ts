@@ -15,8 +15,7 @@ type containsParam<ParamsType> = {
  */
 class ParametersUI<ParamsType> {
   values: ParamsType;
-  gui: Patcher
-  parent: Patcher | undefined;
+  gui: Patcher;
   id: string;
   iter: number;
   paramsD: Dict | undefined;
@@ -26,38 +25,25 @@ class ParametersUI<ParamsType> {
   updateObj: Maxobj | undefined;
 
   /**
-   * Constructor of the UI infrastructure. Checks if infrastructure exists, creates it if not found or broken. Once created recalls parameters with the params argument object.
-   * @param patcherID ID of the subpatcher containing the UI.
-   * @param newValues  Object of type ParamsType containing values to recall.
-   * @param parent Optional parent patcher. If provided, the subpatcher will be searched for within the parent patcher instead of the main patcher.
+   * Constructor of the UI infrastructure. Checks if infrastructure exists, creates it if not found or broken.
+   * Once created recalls parameters with the params argument object.
+   * @param localpatcher The patcher containing the UI elements
+   * @param patcherID ID string used for naming the infrastructure elements
+   * @param newValues Object of type ParamsType containing values to recall
    */
-  constructor(patcherID: string, newValues: ParamsType, parentID?: string[]) {
+  constructor(localpatcher: Patcher, patcherID: string, newValues: ParamsType, unique: boolean = false, maxforlive: boolean = false) {
     this.values = {} as ParamsType;
-    for (var key in newValues) {
+    for (const key in newValues) {
       if (Object.prototype.hasOwnProperty.call(newValues, key)) {
         (this.values as any)[key] = newValues[key];
       }
     }
+    this.gui = localpatcher;
     this.id = patcherID;
     this.iter = 0;
-    if(parentID != undefined && parentID.length > 0){
-      this.parent = patcher.getnamed(parentID[0]).subpatcher();
-      if(parentID.length > 1){
-        let g = this.parent;
-        for(let i = 1; i < parentID.length; i++){
-          g = g.getnamed(parentID[i]).subpatcher();
-        }
-        this.parent = g;
-      }
-      this.gui = this.parent.getnamed(this.id).subpatcher();
-    }
-    else{
-      this.gui = patcher.getnamed(this.id).subpatcher();
-    }
+
     if (this.gui == undefined) {
-      throw new Error(
-        "Subpatcher with ID = " + this.id + "  not found, aborting!"
-      );
+      throw new Error("Invalid patcher provided, aborting!");
     }
     this.createInfrastructure();
     this.createParameters();
@@ -71,6 +57,7 @@ class ParametersUI<ParamsType> {
     let hasRecall = false;
     let hasParams = false;
     let hasUpdate = false;
+    let hasPrependUpdate = false;
 
     if (this.gui.count >= 3) {
       let obj = this.gui.firstobject;
@@ -92,11 +79,15 @@ class ParametersUI<ParamsType> {
             hasUpdate = true;
             this.updateObj = obj;
           }
+        } else if (objectClass == "prepend") {
+          if (obj.varname == "prependUpdate") {
+            hasPrependUpdate = true;
+          }
         }
         obj = obj.nextobject;
       }
     }
-    return hasRecall && hasParams && hasUpdate;
+    return hasRecall && hasParams && hasUpdate && hasPrependUpdate;
   }
 
   /**
@@ -105,7 +96,6 @@ class ParametersUI<ParamsType> {
    */
   createInfrastructure(): void {
     if (this.infrastructureExists() == false) {
-      //post("Cleaning infrastructure!" + "\n");
       this.cleanInfrastructure();
 
       let idObj: Maxobj = this.gui.getnamed("id");
@@ -116,21 +106,24 @@ class ParametersUI<ParamsType> {
         100,
         "dict",
         this.id + "_recall"
-      ); //create a dict object instance called "thid.id_recall"
+      );
       this.recallObj.varname = "recall";
-      this.recallD = new Dict(this.id + "_recall"); //used to write parameters values
-      this.paramsObj = this.gui.newdefault(200, 700, "dict", this.id); //create a dict object instance called "thid.id"
+      this.recallD = new Dict(this.id + "_recall");
+
+      this.paramsObj = this.gui.newdefault(200, 700, "dict", this.id);
       this.paramsObj.varname = "params";
-      this.paramsD = new Dict(this.id); //used to get parameters values
-      this.updateObj = this.gui.newdefault(50, 700, "s", "update"); //create a dict object instance called "thid.id_update"
+      this.paramsD = new Dict(this.id);
+
+      let prependUpdate = this.gui.newdefault(50, 650, "prepend", this.id);
+      prependUpdate.varname = "prependUpdate";
+
+      this.updateObj = this.gui.newdefault(50, 700, "s", "update");
       this.updateObj.varname = "update";
-      //post("Infrastructure created!" + "\n");
-    }
-    else{
-      //post("Infrastructure already exists!" + "\n");
+
+      // Connect prependUpdate to updateObj
+      this.gui.connect(prependUpdate, 0, this.updateObj, 0);
     }
   }
-
 
   /**
    * This function should clear "id" Dict, "id_recall" Dict and "update" Send objects.
@@ -150,18 +143,21 @@ class ParametersUI<ParamsType> {
           if (obj.varname == "params") {
             this.gui.remove(obj);
             this.paramsObj = undefined;
-            this.paramsD = undefined; //used to get parameters values
+            this.paramsD = undefined;
           }
         } else if (objectClass == "s" || objectClass == "send") {
           if (obj.varname == "update") {
             this.gui.remove(obj);
             this.updateObj = undefined;
           }
+        } else if (objectClass == "prepend") {
+          if (obj.varname == "prependUpdate") {
+            this.gui.remove(obj);
+          }
         }
         obj = obj.nextobject;
       }
     }
-
     return;
   }
 
@@ -270,16 +266,15 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   createParameters(newParams?: ParamsType): void {
-    //post("Checking Parameters" + "\n");
     if (this.parametersExist() == false) {
-      //post("Not all parameteres exist already!" + "\n");
       this.cleanParameters();
-      //post("Creating parameters!" + "\n");
       if (newParams != undefined) {
         this.values = newParams;
       }
 
       this.iter = 0;
+
+      let prependUpdate = this.gui.getnamed("prependUpdate");
 
       for (let k in this.values) {
         let unpack = this.gui.newdefault(
@@ -314,23 +309,21 @@ class ParametersUI<ParamsType> {
           50 + 150 * this.iter,
           100 + 500,
           "t",
-          "b",
+          k,
           "l"
         );
         tbl.varname = k + "_tbl";
+
         this.gui.connect(this.recallObj, 0, unpack, 0);
         this.gui.connect(unpack, 0, pvar, 0);
         this.gui.connect(pvar, 0, prepend, 0);
         this.gui.connect(prepend, 0, prependSet, 0);
         this.gui.connect(prependSet, 0, tbl, 0);
         this.gui.connect(tbl, 1, this.paramsObj, 0);
-        this.gui.connect(tbl, 0, this.updateObj, 0);
+        this.gui.connect(tbl, 0, prependUpdate, 0);
 
         this.iter++;
       }
-      //post("Finished creating parameters!" + "\n");
-    } else {
-      //post("Parameters already exist!" + "\n");
     }
 
     this.set(this.values);
@@ -342,8 +335,6 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   cleanParameters(): void {
-    //post("Cleaning parameters!" + "\n");
-
     if (this.gui.count > 0) {
       let obj = this.gui.firstobject;
       while (obj.nextobject != null) {
@@ -358,11 +349,13 @@ class ParametersUI<ParamsType> {
             let prepend = this.gui.getnamed(scriptingName + "_prepend");
             let prependSet = this.gui.getnamed(scriptingName + "_prependSet");
             let tbl = this.gui.getnamed(scriptingName + "_tbl");
+            let prependUpdate = this.gui.getnamed(scriptingName + "_prependUpdate");
 
             this.gui.remove(unpack);
             this.gui.remove(prepend);
             this.gui.remove(prependSet);
             this.gui.remove(tbl);
+            this.gui.remove(prependUpdate);
           }
         }
         obj = obj.nextobject;
@@ -384,7 +377,7 @@ class ParametersUI<ParamsType> {
     } else {
       throw new Error(
         this.id +
-          " Dict cannot be found, you need to create infrastructure first"
+        " Dict cannot be found, you need to create infrastructure first"
       );
     }
   }
@@ -399,7 +392,7 @@ class ParametersUI<ParamsType> {
       this.values = newParams;
       this.recallD.clear();
       this.recallD.parse(JSON.stringify(this.values));
-      if(update){
+      if (update) {
         this.recallObj.message("bang");
       }
     } else {
@@ -409,49 +402,42 @@ class ParametersUI<ParamsType> {
 
   /**
    * This function sets a live parameter to the dial object.
-   * @param dial Maxobj object, accepts only live.* objects (like live.dial, live.slider, live.numbox, live.text, live.menu etc.). This can also be a patcher object, in which case the parameter will be set to the named object.
-   * @param name Parameter name.
-   * @param min Minimum value.
-   * @param max Maximum value.
-   * @param defaultValue Default value.
-   * @param enums Optional array of strings. This automatically sets parameter type to "enum".
-   * @param isFloat Optional boolean. This automatically sets parameter type to "float" if true, integer otherwise.
-   * @param parents Optional array of strings. This is used to set the parameter to a nested parameter.
-   * @returns {void}
+   * @param dial Maxobj object or Patcher that contains the parameter
+   * @param name Parameter name
+   * @param min Minimum value
+   * @param max Maximum value
+   * @param defaultValue Default value
+   * @param enums Optional array of strings. This automatically sets parameter type to "enum"
+   * @param isFloat Optional boolean. Sets parameter type to "float" if true, integer otherwise
    */
-  setLiveParameter(dial: Maxobj | Patcher, name: string, min: number, max: number, defaultValue: number, enums?: string[], isFloat: boolean = false, parents?: string[]): void{
-    if(dial instanceof Patcher){
-      let id = name;
-
-      if(parents != undefined && parents.length > 0){
-        let parent = patcher.getnamed(parents[0]).subpatcher();
-        if(parents.length > 1){
-          let g = parent;
-          for(let i = 1; i < parents.length; i++){
-            g = g.getnamed(parents[i]).subpatcher();
-          }
-          parent = g;
-        }
-        dial = dial.getnamed(id).subpatcher();
-      }
+  setLiveParameter(
+    dial: Maxobj | Patcher,
+    name: string,
+    min: number,
+    max: number,
+    defaultValue: number,
+    enums?: string[],
+    isFloat: boolean = false
+  ): void {
+    if (dial instanceof Patcher) {
+      dial = dial.getnamed(name);
     }
-    
-    if(name != undefined){
+
+    if (name != undefined) {
       dial.message("_parameter_shortname", name);
     }
-    if(enums != undefined){
+    if (enums != undefined) {
       dial.message("_parameter_type", 2);
-      dial.message("_parameter_range", enums);  
-    }else if (isFloat){
+      dial.message("_parameter_range", enums);
+    } else if (isFloat) {
       dial.message("_parameter_type", 1);
       dial.message("_parameter_range", [min, max]);
-    }else{
+    } else {
       dial.message("_parameter_type", 0);
       dial.message("_parameter_range", [min, max]);
     }
-    if(defaultValue != undefined){
+    if (defaultValue != undefined) {
       dial.message("_parameter_initial", defaultValue);
     }
-    return;
   }
 } 

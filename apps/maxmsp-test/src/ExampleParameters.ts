@@ -26,12 +26,13 @@ let patcherNames: string[] = ["test", "test2"];
 function init() {
   for (let patcherName in patcherNames) {
     parameterUIs[patcherName] = new ParametersUI<TestParameterType>(
+      patcher.getnamed(patcherNames[patcherName]).subpatcher(),
       patcherNames[patcherName],
       defaultParams
     );
   }
-  parameterUIs[2] = new ParametersUI<TestParameterType>("nest", defaultParams, ["sub"]);
-  parameterUIs[3] = new ParametersUI<TestParameterType>("nest", defaultParams, ["very", "sub"]);
+  parameterUIs[2] = new ParametersUI<TestParameterType>(patcher.getnamed("nest").subpatcher().getnamed("sub").subpatcher(), "nest", defaultParams);
+  parameterUIs[3] = new ParametersUI<TestParameterType>(patcher.getnamed("nest").subpatcher().getnamed("very").subpatcher().getnamed("sub").subpatcher(), "nest", defaultParams);
 }
 
 
@@ -55,6 +56,10 @@ function randomize() {
   randomValues.button = Math.random() > 0.5;
   randomValues.menu = Math.floor(Math.random() * 3);
   parameterUIs[index].set(randomValues);
+}
+
+function update() {
+  post("Received update from " + arguments[0] + "on parameter " + arguments[1] + "\n");
 }
 
 // .ts files with this at the end become a script usable in a [js] or [jsui] object
