@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.12
+
+### Patch Changes
+
+- 43eb784: api change to patcher, added named updated, remove parents
+
 ## 0.1.11
 
 ### Patch Changes
