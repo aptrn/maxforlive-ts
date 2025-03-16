@@ -1,5 +1,12 @@
 # @aptrn/parameters-ts
 
+## 0.1.14
+
+### Patch Changes
+
+- 6decda2: updated mode on setliveparameter
+- 7c13f48: updated mode on setliveparameter
+
 ## 0.1.13
 
 ### Patch Changes
