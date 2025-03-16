@@ -473,8 +473,8 @@ class ParametersUI<ParamsType> {
     min: number,
     max: number,
     defaultValue: number,
+    mode: number = 0, // 0: int, 1: float, 2: enum
     enums?: string[],
-    isFloat: boolean = false
   ): void {
     if (dial instanceof Patcher) {
       dial = dial.getnamed(name);
@@ -483,16 +483,17 @@ class ParametersUI<ParamsType> {
     if (name != undefined) {
       dial.message("_parameter_shortname", name);
     }
-    if (enums != undefined) {
-      dial.message("_parameter_type", 2);
-      dial.message("_parameter_range", enums);
-    } else if (isFloat) {
-      dial.message("_parameter_type", 1);
-      dial.message("_parameter_range", [min, max]);
-    } else {
+    if(mode == 0){
       dial.message("_parameter_type", 0);
       dial.message("_parameter_range", [min, max]);
+    } else if (mode == 1) {
+      dial.message("_parameter_type", 1);
+      dial.message("_parameter_range", [min, max]);
+    } else if (mode == 2) {
+      dial.message("_parameter_type", 2);
+      dial.message("_parameter_range", enums);
     }
+
     if (defaultValue != undefined) {
       dial.message("_parameter_initial", defaultValue);
     }
