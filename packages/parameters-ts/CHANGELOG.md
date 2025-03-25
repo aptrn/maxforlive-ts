@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.15
+
+### Patch Changes
+
+- 4f04389: headless mode
+
 ## 0.1.14
 
 ### Patch Changes
