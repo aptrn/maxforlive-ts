@@ -32,6 +32,8 @@ function init() {
   }
   parameterUIs[2] = new ParametersUI<TestParameterType>(patcher.getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, true);
   parameterUIs[3] = new ParametersUI<TestParameterType>(patcher.getnamed("very").subpatcher().getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, true);
+
+  parameterUIs[4] = ParametersUI.headless<TestParameterType>(defaultParams);
 }
 
 

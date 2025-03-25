@@ -15,7 +15,7 @@ type containsParam<ParamsType> = {
  */
 class ParametersUI<ParamsType> {
   values: ParamsType;
-  gui: Patcher;
+  gui: Patcher | undefined;
   id: string;
   uniqueId: string;
   iter: number;
@@ -24,6 +24,7 @@ class ParametersUI<ParamsType> {
   recallD: Dict | undefined;
   recallObj: Maxobj | undefined;
   updateObj: Maxobj | undefined;
+  isHeadless: boolean;
 
   /**
    * Generates a random 8-character string of uppercase letters and numbers
@@ -39,15 +40,29 @@ class ParametersUI<ParamsType> {
   }
 
   /**
+   * Constructor for headless mode - only manages values without UI infrastructure
+   * @param newValues Object of type ParamsType containing values
+   */
+  static headless<ParamsType>(newValues: ParamsType): ParametersUI<ParamsType> {
+    return new ParametersUI<ParamsType>(undefined, "headless", newValues, false, true);
+  }
+
+  /**
    * Constructor of the UI infrastructure. Checks if infrastructure exists, creates it if not found or broken.
    * Once created recalls parameters with the params argument object.
    * @param localpatcher The patcher containing the UI elements
    * @param patcherID ID string used for naming the infrastructure elements
    * @param newValues Object of type ParamsType containing values to recall
    * @param unique If true, adds special characters to dict names to ensure uniqueness
-   * @param maxforlive If true with unique=true, uses "---" prefix, otherwise uses random string
+   * @param isHeadless If true, operates in headless mode without UI infrastructure
    */
-  constructor(localpatcher: Patcher, patcherID: string, newValues: ParamsType, unique: boolean = false) {
+  constructor(
+    localpatcher: Patcher | undefined, 
+    patcherID: string, 
+    newValues: ParamsType, 
+    unique: boolean = false,
+    isHeadless: boolean = false
+  ) {
     this.values = {} as ParamsType;
     for (const key in newValues) {
       if (Object.prototype.hasOwnProperty.call(newValues, key)) {
@@ -57,21 +72,26 @@ class ParametersUI<ParamsType> {
     this.gui = localpatcher;
     this.id = patcherID;
     this.iter = 0;
+    this.isHeadless = isHeadless;
 
-    if (this.gui == undefined) {
+    if (!isHeadless && this.gui == undefined) {
       throw new Error("Invalid patcher provided, aborting!");
     }
 
-    // Try to get existing uniqueId from infrastructure
-    let existingPrefix = this.getExistingUniquePrefix();
+    if (!isHeadless) {
+      // Try to get existing unique prefix from infrastructure
+      let existingPrefix = this.getExistingUniquePrefix();
 
-    // If we found an existing prefix, use it, otherwise generate new one if unique is true
-    this.uniqueId = existingPrefix !== null ?
-      existingPrefix + patcherID :
-      (unique ? this.generateRandomId() + patcherID : patcherID);
+      // If we found an existing prefix, use it, otherwise generate new one if unique is true
+      this.uniqueId = existingPrefix !== null ?
+        existingPrefix + patcherID :
+        (unique ? this.generateRandomId() + patcherID : patcherID);
 
-    this.createInfrastructure();
-    this.createParameters();
+      this.createInfrastructure();
+      this.createParameters();
+    } else {
+      this.uniqueId = "headless";
+    }
   }
 
   /**
@@ -79,6 +99,8 @@ class ParametersUI<ParamsType> {
    * @returns {string | null} The existing prefix if found, null otherwise
    */
   private getExistingUniquePrefix(): string | null {
+    if (!this.gui || this.isHeadless) return null;
+    
     if (this.gui.count > 0) {
       let obj = this.gui.firstobject;
       while (obj.nextobject != null) {
@@ -110,6 +132,8 @@ class ParametersUI<ParamsType> {
    * @returns {boolean} True if infrastructure exists, false otherwise
    */
   infrastructureExists(): boolean {
+    if (!this.gui || this.isHeadless) return false;
+
     let hasRecall = false;
     let hasParams = false;
     let hasUpdate = false;
@@ -123,12 +147,12 @@ class ParametersUI<ParamsType> {
           if (obj.varname == "recall") {
             hasRecall = true;
             this.recallObj = obj;
-            this.recallD = new Dict(this.uniqueId + "_recall"); //used to write parameters values
+            this.recallD = new Dict(this.uniqueId + "_recall");
           }
           if (obj.varname == "params") {
             hasParams = true;
             this.paramsObj = obj;
-            this.paramsD = new Dict(this.uniqueId); //used to get parameters values
+            this.paramsD = new Dict(this.uniqueId);
           }
         } else if (objectClass == "s" || objectClass == "send") {
           if (obj.varname == "update") {
@@ -151,33 +175,42 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   createInfrastructure(): void {
+    if (!this.gui || this.isHeadless) return;
+
     if (this.infrastructureExists() == false) {
       this.cleanInfrastructure();
 
-      let idObj: Maxobj = this.gui.getnamed("id");
-      idObj.message("set", this.uniqueId);
+      let idObj = this.gui.getnamed("id");
+      if (idObj) {
+        idObj.message("set", this.uniqueId);
+      }
 
-      this.recallObj = this.gui.newdefault(
-        50,
-        100,
-        "dict",
-        this.uniqueId + "_recall"
-      );
-      this.recallObj.varname = "recall";
+      this.recallObj = this.gui.newdefault(50, 100, "dict", this.uniqueId + "_recall");
+      if (this.recallObj) {
+        this.recallObj.varname = "recall";
+      }
       this.recallD = new Dict(this.uniqueId + "_recall");
 
       this.paramsObj = this.gui.newdefault(200, 700, "dict", this.uniqueId);
-      this.paramsObj.varname = "params";
+      if (this.paramsObj) {
+        this.paramsObj.varname = "params";
+      }
       this.paramsD = new Dict(this.uniqueId);
 
       let prependUpdate = this.gui.newdefault(50, 650, "prepend", this.id);
-      prependUpdate.varname = "prependUpdate";
+      if (prependUpdate) {
+        prependUpdate.varname = "prependUpdate";
+      }
 
       this.updateObj = this.gui.newdefault(50, 700, "s", "update");
-      this.updateObj.varname = "update";
+      if (this.updateObj) {
+        this.updateObj.varname = "update";
+      }
 
       // Connect prependUpdate to updateObj
-      this.gui.connect(prependUpdate, 0, this.updateObj, 0);
+      if (prependUpdate && this.updateObj) {
+        this.gui.connect(prependUpdate, 0, this.updateObj, 0);
+      }
     }
   }
 
@@ -186,6 +219,8 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   cleanInfrastructure(): void {
+    if (!this.gui || this.isHeadless) return;
+
     if (this.gui.count > 0) {
       let obj = this.gui.firstobject;
       while (obj.nextobject != null) {
@@ -214,7 +249,6 @@ class ParametersUI<ParamsType> {
         obj = obj.nextobject;
       }
     }
-    return;
   }
 
   /**
@@ -283,6 +317,8 @@ class ParametersUI<ParamsType> {
    * @returns Return true if parameters exist, false otherwise
    */
   parametersExist(): boolean {
+    if (!this.gui || this.isHeadless) return false;
+
     let hasParams = this.createContainsParam();
 
     if (this.gui.count > 0) {
@@ -291,9 +327,7 @@ class ParametersUI<ParamsType> {
         let objectClass = obj.maxclass;
         if (objectClass == "pvar") {
           let scriptingName = obj.varname.split("_pvar")[0];
-          if (
-            Object.prototype.hasOwnProperty.call(this.values, scriptingName)
-          ) {
+          if (Object.prototype.hasOwnProperty.call(this.values, scriptingName)) {
             let unpack = this.gui.getnamed(scriptingName + "_unpack");
             let prepend = this.gui.getnamed(scriptingName + "_prepend");
             let prependSet = this.gui.getnamed(scriptingName + "_prependSet");
@@ -305,8 +339,9 @@ class ParametersUI<ParamsType> {
               prependSet != null &&
               tbl != null;
 
-            if (actuallyHasEverything == true)
+            if (actuallyHasEverything) {
               this.setParamExists(hasParams, scriptingName, true);
+            }
           }
         }
         obj = obj.nextobject;
@@ -322,6 +357,8 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   createParameters(newParams?: ParamsType): void {
+    if (!this.gui || this.isHeadless) return;
+
     if (this.parametersExist() == false) {
       this.cleanParameters();
       if (newParams != undefined) {
@@ -333,50 +370,40 @@ class ParametersUI<ParamsType> {
       let prependUpdate = this.gui.getnamed("prependUpdate");
 
       for (let k in this.values) {
-        let unpack = this.gui.newdefault(
-          50 + 150 * this.iter,
-          100 + 100,
-          "dict.unpack",
-          k + ":"
-        );
-        unpack.varname = k + "_unpack";
-        let pvar = this.gui.newdefault(
-          50 + 150 * this.iter,
-          100 + 200,
-          "pvar",
-          k
-        );
-        pvar.varname = k + "_pvar";
-        let prepend = this.gui.newdefault(
-          50 + 150 * this.iter,
-          100 + 300,
-          "prepend",
-          k
-        );
-        prepend.varname = k + "_prepend";
-        let prependSet = this.gui.newdefault(
-          50 + 150 * this.iter,
-          100 + 400,
-          "prepend",
-          "set"
-        );
-        prependSet.varname = k + "_prependSet";
-        let tbl = this.gui.newdefault(
-          50 + 150 * this.iter,
-          100 + 500,
-          "t",
-          k,
-          "l"
-        );
-        tbl.varname = k + "_tbl";
+        let unpack = this.gui.newdefault(50 + 150 * this.iter, 100 + 100, "dict.unpack", k + ":");
+        if (unpack) {
+          unpack.varname = k + "_unpack";
+        }
 
-        this.gui.connect(this.recallObj, 0, unpack, 0);
-        this.gui.connect(unpack, 0, pvar, 0);
-        this.gui.connect(pvar, 0, prepend, 0);
-        this.gui.connect(prepend, 0, prependSet, 0);
-        this.gui.connect(prependSet, 0, tbl, 0);
-        this.gui.connect(tbl, 1, this.paramsObj, 0);
-        this.gui.connect(tbl, 0, prependUpdate, 0);
+        let pvar = this.gui.newdefault(50 + 150 * this.iter, 100 + 200, "pvar", k);
+        if (pvar) {
+          pvar.varname = k + "_pvar";
+        }
+
+        let prepend = this.gui.newdefault(50 + 150 * this.iter, 100 + 300, "prepend", k);
+        if (prepend) {
+          prepend.varname = k + "_prepend";
+        }
+
+        let prependSet = this.gui.newdefault(50 + 150 * this.iter, 100 + 400, "prepend", "set");
+        if (prependSet) {
+          prependSet.varname = k + "_prependSet";
+        }
+
+        let tbl = this.gui.newdefault(50 + 150 * this.iter, 100 + 500, "t", k, "l");
+        if (tbl) {
+          tbl.varname = k + "_tbl";
+        }
+
+        if (this.recallObj && unpack && pvar && prepend && prependSet && tbl && prependUpdate) {
+          this.gui.connect(this.recallObj, 0, unpack, 0);
+          this.gui.connect(unpack, 0, pvar, 0);
+          this.gui.connect(pvar, 0, prepend, 0);
+          this.gui.connect(prepend, 0, prependSet, 0);
+          this.gui.connect(prependSet, 0, tbl, 0);
+          this.gui.connect(tbl, 1, this.paramsObj!, 0);
+          this.gui.connect(tbl, 0, prependUpdate, 0);
+        }
 
         this.iter++;
       }
@@ -391,6 +418,8 @@ class ParametersUI<ParamsType> {
    * @returns {void}
    */
   cleanParameters(): void {
+    if (!this.gui || this.isHeadless) return;
+
     if (this.gui.count > 0) {
       let obj = this.gui.firstobject;
       while (obj.nextobject != null) {
@@ -398,35 +427,37 @@ class ParametersUI<ParamsType> {
         let objectClass = obj.maxclass;
         if (objectClass == "pvar") {
           scriptingName = obj.varname.split("_pvar")[0];
-          if (
-            Object.prototype.hasOwnProperty.call(this.values, scriptingName)
-          ) {
+          if (Object.prototype.hasOwnProperty.call(this.values, scriptingName)) {
             let unpack = this.gui.getnamed(scriptingName + "_unpack");
             let prepend = this.gui.getnamed(scriptingName + "_prepend");
             let prependSet = this.gui.getnamed(scriptingName + "_prependSet");
             let tbl = this.gui.getnamed(scriptingName + "_tbl");
             let prependUpdate = this.gui.getnamed(scriptingName + "_prependUpdate");
 
-            this.gui.remove(unpack);
-            this.gui.remove(prepend);
-            this.gui.remove(prependSet);
-            this.gui.remove(tbl);
-            this.gui.remove(prependUpdate);
+            if (unpack) this.gui.remove(unpack);
+            if (prepend) this.gui.remove(prepend);
+            if (prependSet) this.gui.remove(prependSet);
+            if (tbl) this.gui.remove(tbl);
+            if (prependUpdate) this.gui.remove(prependUpdate);
           }
         }
         obj = obj.nextobject;
 
         let pvar = this.gui.getnamed(scriptingName + "_pvar");
-        this.gui.remove(pvar);
+        if (pvar) this.gui.remove(pvar);
       }
     }
   }
 
   /**
-   * This function gets parameter values from the "id" Dict, sets this.params and returns it
+   * This function gets parameter values
    * @returns {ParamsType}
    */
   fetch(): ParamsType {
+    if (this.isHeadless) {
+      return this.values;
+    }
+    
     if (this.paramsD != undefined) {
       this.values = JSON.parse(this.paramsD.stringify());
       return this.values;
@@ -439,12 +470,17 @@ class ParametersUI<ParamsType> {
   }
 
   /**
-   * This function sets parameter values to the "id_recall" Dict, sets this.params and then clears the "id_recall" Dict.
+   * This function sets parameter values
    * @param newParams New parameter values
    * @returns {void}
    */
   set(newParams: ParamsType, update: boolean = true): void {
-    let recallDict = this.gui.getnamed(this.uniqueId + "_recall") as any;
+    if (this.isHeadless) {
+      this.values = newParams;
+      return;
+    }
+
+    let recallDict = this.gui?.getnamed(this.uniqueId + "_recall") as any;
     if (this.recallD != undefined && this.recallObj != undefined) {
       this.values = newParams;
       this.recallD.clear();
@@ -473,7 +509,7 @@ class ParametersUI<ParamsType> {
     min: number,
     max: number,
     defaultValue: number,
-    mode: number = 0, // 0: int, 1: float, 2: enum
+    mode: number = 0, // 0: float, 1: int, 2: enum
     enums?: string[],
   ): void {
     if (dial instanceof Patcher) {
