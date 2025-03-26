@@ -63,12 +63,8 @@ class ParametersUI<ParamsType> {
     unique: boolean = false,
     isHeadless: boolean = false
   ) {
-    this.values = {} as ParamsType;
-    for (const key in newValues) {
-      if (Object.prototype.hasOwnProperty.call(newValues, key)) {
-        (this.values as any)[key] = newValues[key];
-      }
-    }
+    // Deep copy the values to support recursive objects
+    this.values = JSON.parse(JSON.stringify(newValues)) as ParamsType;
     this.gui = localpatcher;
     this.id = patcherID;
     this.iter = 0;
