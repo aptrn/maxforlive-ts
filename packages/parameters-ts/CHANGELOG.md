@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.16
+
+### Patch Changes
+
+- e4d41ae: json stringify json parse magic
+
 ## 0.1.15
 
 ### Patch Changes
