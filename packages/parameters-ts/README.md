@@ -1,8 +1,10 @@
-# @aptrn/ableton-ts
+# @aptrn/parameters-ts
 
-Typescript library to interact with Ableton Live Object Model.
+manage many nested pages of parameters in max/msp using typescript
 
-## To-do
+## Todo
 
-- [ ] Add tests for all functions
-- [ ] Add documentation
+- [ ] Create parameters objects based on type
+- [x] Read parameters values
+- [x] Set parameters values
+- [x] Default parameters
