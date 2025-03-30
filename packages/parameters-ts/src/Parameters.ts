@@ -25,6 +25,7 @@ class ParametersUI<ParamsType> {
   recallObj: Maxobj | undefined;
   updateObj: Maxobj | undefined;
   isHeadless: boolean;
+  isAbleton: boolean;
 
   /**
    * Generates a random 8-character string of uppercase letters and numbers
@@ -69,7 +70,9 @@ class ParametersUI<ParamsType> {
     this.id = patcherID;
     this.iter = 0;
     this.isHeadless = isHeadless;
-
+    this.isAbleton = false;
+    let ableton =  new LiveAPI();
+    this.isAbleton = ableton.info != "";
     if (!isHeadless && this.gui == undefined) {
       throw new Error("Invalid patcher provided, aborting!");
     }
@@ -83,7 +86,7 @@ class ParametersUI<ParamsType> {
         existingPrefix + patcherID :
         (unique ? this.generateRandomId() + patcherID : patcherID);
 
-      this.createInfrastructure();
+      this.createInfrastructure(unique);
       this.createParameters();
     } else {
       this.uniqueId = "headless";
@@ -170,7 +173,7 @@ class ParametersUI<ParamsType> {
    * This function creates a "Dict" object named "id", a "Dict" object named "id_recall" and a Send object with target "update"
    * @returns {void}
    */
-  createInfrastructure(): void {
+  createInfrastructure(unique: boolean = false): void {
     if (!this.gui || this.isHeadless) return;
 
     if (this.infrastructureExists() == false) {
@@ -198,7 +201,18 @@ class ParametersUI<ParamsType> {
         prependUpdate.varname = "prependUpdate";
       }
 
-      this.updateObj = this.gui.newdefault(50, 700, "s", "update");
+      if(unique){
+        if(this.isAbleton){
+          this.updateObj = this.gui.newdefault(50, 700, "s", "---update");
+        }
+        else{
+          this.updateObj = this.gui.newdefault(50, 700, "s", "#0_update");
+        }
+      }
+      else{
+        this.updateObj = this.gui.newdefault(50, 700, "s", "update");
+      }
+
       if (this.updateObj) {
         this.updateObj.varname = "update";
       }

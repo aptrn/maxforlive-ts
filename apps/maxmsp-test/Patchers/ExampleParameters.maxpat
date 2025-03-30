@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 9,
 			"minor" : 0,
-			"revision" : 4,
+			"revision" : 5,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 134.0, 134.0, 1729.0, 1273.0 ],
+		"rect" : [ 134.0, 85.0, 1729.0, 1273.0 ],
 		"gridsize" : [ 8.0, 8.0 ],
 		"gridsnaponopen" : 2,
 		"objectsnaponopen" : 0,
@@ -36,8 +36,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 712.0, 760.0, 87.0, 22.0 ],
-					"text" : "receive update"
+					"patching_rect" : [ 712.0, 760.0, 99.0, 22.0 ],
+					"text" : "receive ---update"
 				}
 
 			}
@@ -61,7 +61,7 @@
 						"appversion" : 						{
 							"major" : 9,
 							"minor" : 0,
-							"revision" : 4,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -101,7 +101,7 @@
 										"appversion" : 										{
 											"major" : 9,
 											"minor" : 0,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -181,7 +181,7 @@
 											}
  ],
 										"lines" : [  ],
-										"originid" : "pat-758"
+										"originid" : "pat-114"
 									}
 ,
 									"patching_rect" : [ 50.0, 100.0, 520.0, 288.0 ],
@@ -229,7 +229,7 @@
 							}
  ],
 						"lines" : [  ],
-						"originid" : "pat-755"
+						"originid" : "pat-111"
 					}
 ,
 					"patching_rect" : [ 1032.0, 728.0, 648.0, 440.0 ],
@@ -258,8 +258,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 16.0, 680.0, 24.0, 24.0 ],
-					"svg" : ""
+					"patching_rect" : [ 16.0, 680.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -283,7 +282,7 @@
 						"appversion" : 						{
 							"major" : 9,
 							"minor" : 0,
-							"revision" : 4,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -363,7 +362,7 @@
 							}
  ],
 						"lines" : [  ],
-						"originid" : "pat-763"
+						"originid" : "pat-119"
 					}
 ,
 					"patching_rect" : [ 1064.0, 384.0, 520.0, 288.0 ],
@@ -904,7 +903,7 @@
 
 			}
  ],
-		"originid" : "pat-752",
+		"originid" : "pat-108",
 		"parameters" : 		{
 			"obj-11::obj-7::obj-3" : [ "dial[3]", "dial", 0 ],
 			"obj-11::obj-7::obj-4" : [ "slider[3]", "slider", 0 ],
@@ -1023,28 +1022,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "ExampleParameters.js",
-				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Code",
+				"bootpath" : "~/Documents/code/maxforlive-ts/apps/maxmsp-test/Code",
 				"patcherrelativepath" : "../Code",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "UI.maxpat",
-				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Patchers",
+				"bootpath" : "~/Documents/code/maxforlive-ts/apps/maxmsp-test/Patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "UI_alreadyCreated.maxpat",
-				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Patchers",
+				"bootpath" : "~/Documents/code/maxforlive-ts/apps/maxmsp-test/Patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "params_index.js",
-				"bootpath" : "~/Documents/GitHub/maxforlive-ts/apps/maxmsp-test/Code/lib/@aptrn-parameters-ts",
+				"bootpath" : "~/Documents/code/maxforlive-ts/apps/maxmsp-test/Code/lib/@aptrn-parameters-ts",
 				"patcherrelativepath" : "../Code/lib/@aptrn-parameters-ts",
 				"type" : "TEXT",
 				"implicit" : 1
