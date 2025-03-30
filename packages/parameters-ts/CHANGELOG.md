@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.17
+
+### Patch Changes
+
+- 9802670: Add --- and #0 to update send object if unique
+
 ## 0.1.16
 
 ### Patch Changes
