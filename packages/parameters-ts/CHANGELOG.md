@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.18
+
+### Patch Changes
+
+- cbf4193: Fix update uniqueness in plain max
+
 ## 0.1.17
 
 ### Patch Changes
