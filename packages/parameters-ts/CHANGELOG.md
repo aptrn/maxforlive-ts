@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.23
+
+### Patch Changes
+
+- 1e07bf0: remove post
+
 ## 0.1.22
 
 ### Patch Changes
