@@ -202,12 +202,7 @@ class ParametersUI<ParamsType> {
       }
 
       if(unique){
-        if(this.isAbleton){
-          this.updateObj = this.gui.newdefault(50, 700, "s", "---update");
-        }
-        else{
-          this.updateObj = this.gui.newdefault(50, 700, "s", this.uniqueId + "_update");
-        }
+        this.updateObj = this.gui.newdefault(50, 700, "s", this.uniqueId + "_update");
       }
       else{
         this.updateObj = this.gui.newdefault(50, 700, "s", "update");
