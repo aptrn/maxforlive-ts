@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.20
+
+### Patch Changes
+
+- 7d1cc04: bug in uniqueness
+
 ## 0.1.19
 
 ### Patch Changes
