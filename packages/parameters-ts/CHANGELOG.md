@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.21
+
+### Patch Changes
+
+- b66599e: more fixes on uniqueness
+
 ## 0.1.20
 
 ### Patch Changes
