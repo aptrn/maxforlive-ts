@@ -202,7 +202,9 @@ class ParametersUI<ParamsType> {
       }
 
       if(unique){
-        this.updateObj = this.gui.newdefault(50, 700, "s", this.uniqueId + "_update");
+        // Extract just the unique prefix (XXXX) from this.uniqueId
+        const uniquePrefix = this.uniqueId.split(this.id)[0];
+        this.updateObj = this.gui.newdefault(50, 700, "s", uniquePrefix + "update");
       }
       else{
         this.updateObj = this.gui.newdefault(50, 700, "s", "update");
