@@ -147,14 +147,12 @@ class ParametersUI<ParamsType> {
           if (obj.varname == "recall") {
             hasRecall = true;
             this.recallObj = obj;
-            post("Recall found with name: " + String(obj.getattr("name")));
             this.recallD = new Dict(String(obj.getattr("name")));
           }
           if (obj.varname == "params") {
             hasParams = true;
             this.paramsObj = obj;
             this.paramsD = new Dict(String(obj.getattr("name")));
-            post("Params found with name: " + String(obj.getattr("name")));
           }
         } else if (objectClass == "s" || objectClass == "send") {
           if (obj.varname == "update") {
