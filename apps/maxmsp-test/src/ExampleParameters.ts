@@ -24,14 +24,17 @@ let parameterUIs: ParametersUI<TestParameterType>[] = [];
 let patcherNames: string[] = ["test", "test2"];
 
 function init() {
+  let theupdate = patcher.getnamed("theupdate");
+  theupdate.message("set", "unique" + "_update");
+
   for (let patcherName in patcherNames) {
     parameterUIs[patcherName] = new ParametersUI<TestParameterType>(
       patcher.getnamed(patcherNames[patcherName]).subpatcher(),
       patcherNames[patcherName],
-      defaultParams, true);
+      defaultParams, "unique");
   }
-  parameterUIs[2] = new ParametersUI<TestParameterType>(patcher.getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, true);
-  parameterUIs[3] = new ParametersUI<TestParameterType>(patcher.getnamed("very").subpatcher().getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, true);
+  parameterUIs[2] = new ParametersUI<TestParameterType>(patcher.getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, "unique");
+  parameterUIs[3] = new ParametersUI<TestParameterType>(patcher.getnamed("very").subpatcher().getnamed("sub").subpatcher().getnamed("nest").subpatcher(), "nest", defaultParams, "unique");
 
   parameterUIs[4] = ParametersUI.headless<TestParameterType>(defaultParams);
 }

@@ -45,7 +45,7 @@ class ParametersUI<ParamsType> {
    * @param newValues Object of type ParamsType containing values
    */
   static headless<ParamsType>(newValues: ParamsType): ParametersUI<ParamsType> {
-    return new ParametersUI<ParamsType>(undefined, "headless", newValues, false, true);
+    return new ParametersUI<ParamsType>(undefined, "headless", newValues, "", true);
   }
 
   /**
@@ -54,14 +54,14 @@ class ParametersUI<ParamsType> {
    * @param localpatcher The patcher containing the UI elements
    * @param patcherID ID string used for naming the infrastructure elements
    * @param newValues Object of type ParamsType containing values to recall
-   * @param unique If true, adds special characters to dict names to ensure uniqueness
+   * @param uniquePrefix If a non-empty string is provided, it will be used as a unique prefix for infrastructure elements
    * @param isHeadless If true, operates in headless mode without UI infrastructure
    */
   constructor(
     localpatcher: Patcher | undefined, 
     patcherID: string, 
     newValues: ParamsType, 
-    unique: boolean = false,
+    uniquePrefix: string = "",
     isHeadless: boolean = false
   ) {
     // Deep copy the values to support recursive objects
@@ -81,12 +81,12 @@ class ParametersUI<ParamsType> {
       // Try to get existing unique prefix from infrastructure
       let existingPrefix = this.getExistingUniquePrefix();
 
-      // If we found an existing prefix, use it, otherwise generate new one if unique is true
+      // If we found an existing prefix, use it, otherwise use provided prefix or generate new one
       this.uniqueId = existingPrefix !== null ?
         existingPrefix + patcherID :
-        (unique ? this.generateRandomId() + patcherID : patcherID);
+        (uniquePrefix !== "" ? uniquePrefix + patcherID : this.generateRandomId() + patcherID);
 
-      this.createInfrastructure(unique);
+      this.createInfrastructure(uniquePrefix);
       this.createParameters();
     } else {
       this.uniqueId = "headless";
@@ -171,9 +171,10 @@ class ParametersUI<ParamsType> {
 
   /**
    * This function creates a "Dict" object named "id", a "Dict" object named "id_recall" and a Send object with target "update"
+   * @param uniquePrefix If a non-empty string is provided, it will be used as a unique prefix for infrastructure elements
    * @returns {void}
    */
-  createInfrastructure(unique: boolean = false): void {
+  createInfrastructure(uniquePrefix: string = ""): void {
     if (!this.gui || this.isHeadless) return;
 
     if (this.infrastructureExists() == false) {
@@ -201,10 +202,8 @@ class ParametersUI<ParamsType> {
         prependUpdate.varname = "prependUpdate";
       }
 
-      if(unique){
-        // Extract just the unique prefix (XXXX) from this.uniqueId
-        const uniquePrefix = this.uniqueId.split(this.id)[0];
-        this.updateObj = this.gui.newdefault(50, 700, "s", uniquePrefix + "update");
+      if(uniquePrefix !== ""){
+        this.updateObj = this.gui.newdefault(50, 700, "s", uniquePrefix + "_update");
       }
       else{
         this.updateObj = this.gui.newdefault(50, 700, "s", "update");

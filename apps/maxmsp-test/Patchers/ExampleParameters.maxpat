@@ -33,11 +33,12 @@
 				"box" : 				{
 					"id" : "obj-6",
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 712.0, 760.0, 99.0, 22.0 ],
-					"text" : "receive ---update"
+					"patching_rect" : [ 712.0, 760.0, 47.0, 22.0 ],
+					"text" : "receive",
+					"varname" : "theupdate"
 				}
 
 			}
@@ -181,7 +182,7 @@
 											}
  ],
 										"lines" : [  ],
-										"originid" : "pat-114"
+										"originid" : "pat-648"
 									}
 ,
 									"patching_rect" : [ 50.0, 100.0, 520.0, 288.0 ],
@@ -229,7 +230,7 @@
 							}
  ],
 						"lines" : [  ],
-						"originid" : "pat-111"
+						"originid" : "pat-645"
 					}
 ,
 					"patching_rect" : [ 1032.0, 728.0, 648.0, 440.0 ],
@@ -362,7 +363,7 @@
 							}
  ],
 						"lines" : [  ],
-						"originid" : "pat-119"
+						"originid" : "pat-653"
 					}
 ,
 					"patching_rect" : [ 1064.0, 384.0, 520.0, 288.0 ],
@@ -903,7 +904,7 @@
 
 			}
  ],
-		"originid" : "pat-108",
+		"originid" : "pat-642",
 		"parameters" : 		{
 			"obj-11::obj-7::obj-3" : [ "dial[3]", "dial", 0 ],
 			"obj-11::obj-7::obj-4" : [ "slider[3]", "slider", 0 ],
