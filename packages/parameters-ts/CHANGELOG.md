@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.19
+
+### Patch Changes
+
+- 212c8f0: remove max dependend uniqueness
+
 ## 0.1.18
 
 ### Patch Changes
