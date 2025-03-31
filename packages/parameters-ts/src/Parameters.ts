@@ -206,7 +206,7 @@ class ParametersUI<ParamsType> {
           this.updateObj = this.gui.newdefault(50, 700, "s", "---update");
         }
         else{
-          this.updateObj = this.gui.newdefault(50, 700, "s", "#0_update");
+          this.updateObj = this.gui.newdefault(50, 700, "s", this.uniqueId + "_update");
         }
       }
       else{
@@ -222,6 +222,10 @@ class ParametersUI<ParamsType> {
         this.gui.connect(prependUpdate, 0, this.updateObj, 0);
       }
     }
+  }
+
+  getUniqueId(): string {
+    return this.uniqueId;
   }
 
   /**
