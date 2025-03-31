@@ -1,5 +1,11 @@
 # @aptrn/parameters-ts
 
+## 0.1.22
+
+### Patch Changes
+
+- f8e3d10: eh more uniqueness
+
 ## 0.1.21
 
 ### Patch Changes
