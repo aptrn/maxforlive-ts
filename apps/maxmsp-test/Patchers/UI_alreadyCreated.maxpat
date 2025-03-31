@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 9,
 			"minor" : 0,
-			"revision" : 4,
+			"revision" : 5,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -39,7 +39,7 @@
 					"patching_rect" : [ 32.0, 72.0, 150.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 200.0, 40.0, 150.0, 18.0 ],
-					"text" : "MYFWRT2C_test2",
+					"text" : "KZFBVG5I_unique_test2",
 					"textjustification" : 0,
 					"varname" : "id"
 				}
@@ -62,7 +62,6 @@
 							"parameter_longname" : "menu[2]",
 							"parameter_mmax" : 2,
 							"parameter_modmode" : 0,
-							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "menu",
 							"parameter_type" : 2
 						}
@@ -90,7 +89,6 @@
 							"parameter_longname" : "button[2]",
 							"parameter_mmax" : 1,
 							"parameter_modmode" : 0,
-							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "button",
 							"parameter_type" : 2
 						}
@@ -116,7 +114,6 @@
 						"valueof" : 						{
 							"parameter_longname" : "numbox[2]",
 							"parameter_modmode" : 3,
-							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "numbox",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0
@@ -143,7 +140,6 @@
 						"valueof" : 						{
 							"parameter_longname" : "slider[2]",
 							"parameter_modmode" : 3,
-							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "slider",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0
@@ -170,7 +166,6 @@
 						"valueof" : 						{
 							"parameter_longname" : "dial[2]",
 							"parameter_modmode" : 3,
-							"parameter_osc_name" : "<default>",
 							"parameter_shortname" : "dial",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 0
@@ -189,7 +184,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 5,
 					"outlettype" : [ "dictionary", "", "", "", "" ],
-					"patching_rect" : [ 50.0, 100.0, 166.0, 22.0 ],
+					"patching_rect" : [ 50.0, 100.0, 199.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
 						"legacy" : 0,
@@ -197,7 +192,7 @@
 						"parameter_mappable" : 0
 					}
 ,
-					"text" : "dict MYFWRT2C_test2_recall",
+					"text" : "dict KZFBVG5I_unique_test2_recall",
 					"varname" : "recall"
 				}
 
@@ -209,7 +204,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 5,
 					"outlettype" : [ "dictionary", "", "", "", "" ],
-					"patching_rect" : [ 200.0, 700.0, 131.0, 22.0 ],
+					"patching_rect" : [ 200.0, 700.0, 164.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
 						"legacy" : 0,
@@ -217,7 +212,7 @@
 						"parameter_mappable" : 0
 					}
 ,
-					"text" : "dict MYFWRT2C_test2",
+					"text" : "dict KZFBVG5I_unique_test2",
 					"varname" : "params"
 				}
 
@@ -242,7 +237,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 50.0, 700.0, 100.0, 22.0 ],
-					"text" : "s update",
+					"text" : "s unique_update",
 					"varname" : "update"
 				}
 
@@ -851,7 +846,7 @@
 
 			}
  ],
-		"originid" : "pat-1025"
+		"originid" : "pat-358"
 	}
 
 }

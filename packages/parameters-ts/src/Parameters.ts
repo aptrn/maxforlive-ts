@@ -44,8 +44,8 @@ class ParametersUI<ParamsType> {
    * Constructor for headless mode - only manages values without UI infrastructure
    * @param newValues Object of type ParamsType containing values
    */
-  static headless<ParamsType>(newValues: ParamsType): ParametersUI<ParamsType> {
-    return new ParametersUI<ParamsType>(undefined, "headless", newValues, "", true);
+  static headless<ParamsType>(newValues: ParamsType, instanceName: string = ""): ParametersUI<ParamsType> {
+    return new ParametersUI<ParamsType>(undefined, "headless", newValues, instanceName, true);
   }
 
   /**
@@ -54,14 +54,14 @@ class ParametersUI<ParamsType> {
    * @param localpatcher The patcher containing the UI elements
    * @param patcherID ID string used for naming the infrastructure elements
    * @param newValues Object of type ParamsType containing values to recall
-   * @param uniquePrefix If a non-empty string is provided, it will be used as a unique prefix for infrastructure elements
+   * @param instanceName If a non-empty string is provided, it will be used as a unique prefix for send object. useful to get updates via a receive object with value "instanceName_update"
    * @param isHeadless If true, operates in headless mode without UI infrastructure
    */
   constructor(
     localpatcher: Patcher | undefined, 
     patcherID: string, 
     newValues: ParamsType, 
-    uniquePrefix: string = "",
+    instanceName: string = "",
     isHeadless: boolean = false
   ) {
     // Deep copy the values to support recursive objects
@@ -82,13 +82,22 @@ class ParametersUI<ParamsType> {
       let existingPrefix = this.getExistingUniquePrefix();
 
       // If we found an existing prefix, use it, otherwise use provided prefix or generate new one
-      this.uniqueId = existingPrefix !== null ?
-        existingPrefix + patcherID :
-        (uniquePrefix !== "" ? uniquePrefix + patcherID : this.generateRandomId() + patcherID);
+      if(existingPrefix !== null){
+        this.uniqueId = existingPrefix + "_" + this.id;
+      }
+      else{
+        this.uniqueId = this.generateRandomId();
 
-      this.createInfrastructure(uniquePrefix);
+        if(instanceName !== ""){
+          this.uniqueId += instanceName + "_";
+        }
+        this.uniqueId += this.id;
+      }
+        
+      this.createInfrastructure(instanceName);
       this.createParameters();
-    } else {
+   }
+    else {
       this.uniqueId = "headless";
     }
   }
@@ -104,14 +113,6 @@ class ParametersUI<ParamsType> {
       let obj = this.gui.firstobject;
       while (obj.nextobject != null) {
         if (obj.maxclass == "dict") {
-          if (obj.varname == "recall") {
-            const fullName = obj.getattr("name") as string;
-            const recallSuffix = this.id + "_recall";
-            if (fullName && fullName.indexOf(recallSuffix) === fullName.length - recallSuffix.length) {
-              const prefix = fullName.slice(0, -recallSuffix.length);
-              return prefix || null;
-            }
-          }
           if (obj.varname == "params") {
             const fullName = obj.getattr("name") as string;
             if (fullName && fullName.indexOf(this.id) === fullName.length - this.id.length) {
@@ -146,12 +147,14 @@ class ParametersUI<ParamsType> {
           if (obj.varname == "recall") {
             hasRecall = true;
             this.recallObj = obj;
-            this.recallD = new Dict(this.uniqueId + "_recall");
+            post("Recall found with name: " + String(obj.getattr("name")));
+            this.recallD = new Dict(String(obj.getattr("name")));
           }
           if (obj.varname == "params") {
             hasParams = true;
             this.paramsObj = obj;
-            this.paramsD = new Dict(this.uniqueId);
+            this.paramsD = new Dict(String(obj.getattr("name")));
+            post("Params found with name: " + String(obj.getattr("name")));
           }
         } else if (objectClass == "s" || objectClass == "send") {
           if (obj.varname == "update") {
@@ -490,7 +493,7 @@ class ParametersUI<ParamsType> {
       return;
     }
 
-    let recallDict = this.gui?.getnamed(this.uniqueId + "_recall") as any;
+    //let recallDict = this.gui?.getnamed(this.uniqueId + "_recall") as any;
     if (this.recallD != undefined && this.recallObj != undefined) {
       this.values = newParams;
       this.recallD.clear();
